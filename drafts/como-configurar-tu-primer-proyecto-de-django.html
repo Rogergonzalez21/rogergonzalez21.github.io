@@ -84,13 +84,35 @@
 <h2>Primero, ¿Que demonios es Django?</h2>
 <div class="figure">
 <img alt="Django" src="http://rogergonzalez21.github.io/images/django_tutorial/django.png" />
-<p class="caption">No, no me refiero a Jamie Foxx</p>
 </div>
+<p><em>- Django.</em>
+<em>- Can you spell it?</em>
+<em>- D-J-A-N-G-O. The 'D' is silent.</em></p>
 <p><a class="reference external" href="https://www.djangoproject.com/">Django</a> es un framework web hecho completamente en Python, escalable, que ayuda a un desarrollo rápido de aplicaciones web.</p>
-<p>Como está basado en Python, es muy sencillo de aprender. Aquí solo te voy a enseñar a instalar e iniciar tu primer proyecto de Django.</p>
+<p>Funciona con el lenguaje de programación <a class="reference external" href="https://www.python.org/">Python</a>, que es muy sencillo de aprender. Aquí tienes un <a class="reference external" href="https://www.codecademy.com/es/tracks/python">tutorial</a> muy completo y entendible.</p>
 </div>
-<div class="section" id="instalando-los-paquetes-requeridos">
-<h2>Instalando los paquetes requeridos</h2>
+<div class="section" id="y-que-paginas-web-utilizan-django">
+<h2>¿Y qué páginas web utilizan Django?</h2>
+<p>Buena pregunta, mi querido Padawan. Aquí te muestro 3 aplicaciónes grandes que usan Django:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://disqus.com/home/explore/">Disqus</a></li>
+</ul>
+<a class="reference external image-reference" href="https://disqus.com/home/explore/"><img alt="Disqus" src="http://rogergonzalez21.github.io/images/django_tutorial/disqus.png" /></a>
+<p>Si, la popular aplicación de comentarios, usada por millones de personas (¡Incluso en este sitio!), funciona con Django.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://instagram.com/">Instagram</a></li>
+</ul>
+<a class="reference external image-reference" href="https://instagram.com/"><img alt="Instagram" src="http://rogergonzalez21.github.io/images/django_tutorial/instagram.png" /></a>
+<p>El sitio superpopular de compartir fotos tambien está hecho en Django.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://pinterest.com/">Pinterest</a></li>
+</ul>
+<a class="reference external image-reference" href="https://pinterest.com/"><img alt="Pinterest" src="http://rogergonzalez21.github.io/images/django_tutorial/pinterest.png" /></a>
+<p>Djago es popular entre los sítios de imagenes, porque provee todas las herramientas que se necesitan para <strong>escalar</strong> y soportar miles de vistas inmediatas de contenido.</p>
+<p><a class="reference external" href="http://codecondo.com/popular-websites-django/">Aquí</a> tienes mas páginas hechas con Django.</p>
+</div>
+<div class="section" id="convencido-entonces-comencemos-instalando-los-paquetes-requeridos">
+<h2>¿Convencido? Entonces comencemos instalando los paquetes requeridos.</h2>
 <p>Voy a asumir que estás usando Ubuntu Linux. Si tienes la ultima vesión, ya tienes Python instalado.</p>
 <p>Primero, tienes que instalar los paquetes de desarrollo, el <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtual environment</a> y <a class="reference external" href="https://es.wikipedia.org/wiki/Pip_%28administrador_de_paquetes%29">pip</a>.</p>
 <div class="highlight"><pre>user@pc:~<span class="nv">$ </span>sudo apt-get install python-dev virtualenv python-pip
@@ -99,7 +121,7 @@
 </div>
 <div class="section" id="iniciando-la-aplicacion">
 <h2>Iniciando la aplicación</h2>
-<p>Crea un nuevo directorio, vamos a llamaro <code>proyecto</code></p>
+<p>Crea un nuevo directorio, vamos a llamarlo <code>proyecto</code></p>
 <div class="highlight"><pre>user@pc:~<span class="nv">$ </span>mkdir proyecto
 user@pc:~<span class="nv">$ </span><span class="nb">cd </span>proyecto
 </pre></div>
