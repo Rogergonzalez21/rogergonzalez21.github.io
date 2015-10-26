@@ -98,7 +98,7 @@ Una vez en el panel de control, añadimos el cartucho de MySQL y el de PHPMyAdmi
 <p>¡Ahora podemos clonar nuestro repositorio en OpenShift via Git! En la parte derecha del panel de control
 nos dice &quot;Source code&quot;. Ese es el link de nuestro repositorio, al que podemos acceder con &quot;git clone&quot; desde el terminal.</p>
 <p>Voy a asumir que ya tienes Git instalado y usas Ubuntu.</p>
-<div class="highlight"><pre>user@pc:~/<span class="nv">$ </span>git clone el-link-de-tu-respositorio-aqui repo
+<div class="highlight"><pre>user@pc:~/<span class="nv">$ </span>git clone el-link-de-tu-repositorio-aqui repo
 user@pc:~/<span class="nv">$ </span><span class="nb">cd </span>repo
 </pre></div>
 <p>Si haces <code>ls</code>:</p>
@@ -140,7 +140,7 @@ user@pc:~/repo<span class="nv">$ </span>touch wsgi/static/.gitkeep
 <div class="section" id="ya-el-proyecto-esta-configurado-empecemos-con-el-wsgi">
 <h3>Ya el proyecto está configurado. Empecemos con el <a class="reference external" href="http://python.org.ar/wiki/WSGI">wsgi</a>.</h3>
 <p>Primero, debes editar el activho wsgi.py que vino directamente del repositorio de OpenShift con lo siguiente:</p>
-<p>¡No olvides de reemplazar <strong>'tuProyectoDjango'</strong> con el nombre de tu proyecto!.</p>
+<p>¡No olvides de reemplazar <strong>'tuProyectoDjango'</strong> con el nombre de tu proyecto!</p>
 <div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="n">virtenv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OPENSHIFT_PYTHON_DIR&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/virtenv/&#39;</span>
@@ -183,9 +183,9 @@ python manage.py collectstatic --noinput
 </div>
 <div class="section" id="seguimos-con-las-modificaciones-en-settings">
 <h3>Seguimos con las modificaciones en 'settings'</h3>
-<p>Ya que el wsgy y los hooks están listos, tienes que modificar tu archivo 'settings' para que apunte en donde estan tus archivos 'static', 'media' y 'template':</p>
+<p>Ya que el wsgi y los hooks están listos, tienes que modificar tu archivo 'settings' para que apunte en donde estan tus archivos 'static', 'media' y 'template':</p>
 <p>Todas estas configuraciones están hechas para correr en los sitios predeterminados. Si hiciste algún cambio, reflejalo en tus settings.</p>
-<p>¡Recuerda reemplazar <strong>'tuAppDjango'</strong> con el nombre de tu app!.</p>
+<p>¡Recuerda reemplazar <strong>'tuAppDjango'</strong> con el nombre de tu app!</p>
 <div class="highlight"><pre><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">&#39;/static/&#39;</span>
 <span class="n">MEDIA_URL</span> <span class="o">=</span> <span class="s">&#39;/media/&#39;</span>
 <span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s">&#39;wsgi&#39;</span><span class="p">,</span> <span class="s">&#39;static&#39;</span><span class="p">)</span>
@@ -241,7 +241,7 @@ python manage.py collectstatic --noinput
 
 <span class="o">...</span>
 </pre></div>
-<p>¡Recuerda reemplazar <strong>'tu-base-de-datos-OpenShift'</strong> con el nombre de la base de datos MySQL que te dió OpenShift!.</p>
+<p>¡Recuerda reemplazar <strong>'tu-base-de-datos-OpenShift'</strong> con el nombre de la base de datos MySQL que te dió OpenShift!</p>
 </div>
 </div>
 <div class="section" id="y-listo">
