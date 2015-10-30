@@ -81,22 +81,22 @@
   </div>
   <div class="article_text">
     <p>Algo muy importante luego de que haces tu aplicación en Django es hacer el deploy. ¿Como la gente va a usar tu aplicación <strong>si no pueden llegar a ella</strong>?.</p>
-<p>Aqui llega Red Hat al rescate con su servicio <a class="reference external" href="https://es.wikipedia.org/wiki/Computaci%C3%B3n_en_la_nube#Plataforma_como_servicio_">PaaS</a>, <a class="reference external" href="https://openshift.redhat.com/">OpenShift</a>.</p>
+<p>Aquí llega Red Hat al rescate con su servicio <a class="reference external" href="https://es.wikipedia.org/wiki/Computaci%C3%B3n_en_la_nube#Plataforma_como_servicio_">PaaS</a>, <a class="reference external" href="https://openshift.redhat.com/">OpenShift</a>.</p>
 <div class="section" id="que-es-openshift-eso-con-que-se-come">
 <h2>¿Qué es OpenShift? ¿Eso con qué se come?</h2>
-<p>OpenShift es el servicio de &quot;Plataforma-como-servicio&quot; de Red Hat. Simple, ¿no?. Lo mas importante que tiene OpenShift es que con su cuenta gratuita <strong>se pueden tener hasta 3 aplicaciones en vivo</strong>, incluso con <strong>dominios propios</strong>, caracteristicas que lo convierten en una de las mejores opciones para hacer deploy de aplicaciones web.</p>
+<p>OpenShift es el servicio de &quot;Plataforma-como-servicio&quot; de Red Hat. Simple, ¿no?. Lo más importante que tiene OpenShift es que con su cuenta gratuita <strong>se pueden tener hasta 3 aplicaciones en vivo</strong>, incluso con <strong>dominios propios</strong>, características que lo convierten en una de las mejores opciones para hacer deploy de aplicaciones web.</p>
 </div>
 <div class="section" id="ya-cree-mi-cuenta-en-openshift-ahora-que">
 <h2>Ya creé mi cuenta en OpenShift, ¿Ahora qué?</h2>
 <p>Primero, tienes que <a class="reference external" href="https://developers.openshift.com/en/getting-started-overview.html">configurar tu cuenta</a>. Si no configuras tu cuenta, no podrás acceder a tus aplicaciones
 via Git.</p>
 <p>Luego, desde tu panel de control debes <strong>crear tu primera aplicación</strong>.</p>
-<img alt="Añadir aplicacion" src="http://rogergonzalez21.github.io/es/../images/deploy_django/add_aplication.png" />
+<img alt="Añadir aplicación" src="http://rogergonzalez21.github.io/es/../images/deploy_django/add_aplication.png" />
 <p>Para efectos de este tutorial, vamos a crear una aplicación de Python 2.7.</p>
 <img alt="Python 2.7" src="http://rogergonzalez21.github.io/es/../images/deploy_django/python_2.7.png" />
 <p>Llenamos toda la información que nos pide, y luego esperamos a que nos lleve al panel de control de la aplicación.
 Una vez en el panel de control, añadimos el cartucho de MySQL y el de PHPMyAdmin (opcional).</p>
-<p>¡Ahora podemos clonar nuestro repositorio en OpenShift via Git! En la parte derecha del panel de control
+<p>¡Ahora podemos clonar nuestro repositorio en OpenShift vía Git! En la parte derecha del panel de control
 nos dice &quot;Source code&quot;. Ese es el link de nuestro repositorio, al que podemos acceder con &quot;git clone&quot; desde el terminal.</p>
 <p>Voy a asumir que ya tienes Git instalado y usas Ubuntu.</p>
 <div class="highlight"><pre>user@pc:~/<span class="nv">$ </span>git clone el-link-de-tu-repositorio-aqui repo
@@ -116,7 +116,7 @@ etc, etc, etc...</p>
 user@pc:~/repo<span class="nv">$ </span>mkdir wsgi/static
 user@pc:~/repo<span class="nv">$ </span>touch wsgi/static/.gitkeep
 </pre></div>
-<p>Esto lo usaremos mas adelante, es bueno tenerlo listo.</p>
+<p>Esto lo usaremos más adelante, es bueno tenerlo listo.</p>
 <p>Si has seguido todos los pasos correctamente, deberías tener el siguiente esquema de proyecto:</p>
 <div class="highlight"><pre>tuProyecto/
 +---wsgi/
@@ -153,7 +153,7 @@ user@pc:~/repo<span class="nv">$ </span>touch wsgi/static/.gitkeep
 
 <span class="kn">from</span> <span class="nn">tuProyectoDjango.wsgi</span> <span class="kn">import</span> <span class="n">application</span>
 </pre></div>
-<p>Crea un archivo que se llame &quot;build&quot; (así, sin extension), añade los siguientes scripts y guardalos en <code>.openshift/action_hooks</code>. Estos van a ser ejecutados cada vez que se haga el deployment de la aplicación.</p>
+<p>Crea un archivo que se llame &quot;build&quot; (así, sin extensión), añade los siguientes scripts y guardalos en <code>.openshift/action_hooks</code>. Estos van a ser ejecutados cada vez que se haga el deployment de la aplicación.</p>
 <div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c">#this is .openshift/action/hooks/build</span>
 <span class="c">#remember to make it +x so openshift can run it.</span>
@@ -175,7 +175,7 @@ python manage.py collectstatic --noinput
 
 <span class="c">########################### end of file</span>
 </pre></div>
-<p>El primero crea la carpeta de &quot;media&quot; en el root del proyecto de OpenShift si esta no existe y crea un enlace simbolico a la ruta <code>/wsgi/static/media</code> (recuerdan cuando creamos <code>/wsgi/static/</code>?).</p>
+<p>El primero crea la carpeta de &quot;media&quot; en el root del proyecto de OpenShift si esta no existe y crea un enlace simbólico a la ruta <code>/wsgi/static/media</code> (recuerdan cuando creamos <code>/wsgi/static/</code>?).</p>
 <p>El segundo, activa la virtualenv en OpenShift, ejecuta las migraciones y el <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/staticfiles/#collectstatic">collectstatic</a>.</p>
 <p>Debes añadir el atributo <code>+x</code> a <code>.openshift/action_hooks/build</code>, por lo que tienes que ejecutar lo siguiente en el terminal:</p>
 <div class="highlight"><pre>user@pc:~/repo<span class="nv">$ </span>chmod +x .openshift/action_hooks/build
@@ -185,7 +185,7 @@ python manage.py collectstatic --noinput
 <div class="section" id="seguimos-con-las-modificaciones-en-settings">
 <h3>Seguimos con las modificaciones en 'settings'</h3>
 <p>Ya que el wsgi y los hooks están listos, tienes que modificar tu archivo 'settings' para que apunte en donde estan tus archivos 'static', 'media' y 'template':</p>
-<p>Todas estas configuraciones están hechas para correr en los sitios predeterminados. Si hiciste algún cambio, reflejalo en tus settings.</p>
+<p>Todas estas configuraciones están hechas para correr en los sitios predeterminados. Si hiciste algún cambio, refléjalo en tus settings.</p>
 <p>¡Recuerda reemplazar <strong>'tuAppDjango'</strong> con el nombre de tu app!</p>
 <div class="highlight"><pre><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">&#39;/static/&#39;</span>
 <span class="n">MEDIA_URL</span> <span class="o">=</span> <span class="s">&#39;/media/&#39;</span>
@@ -256,10 +256,10 @@ user@pc:~/repo<span class="nv">$ </span>git commit -m <span class="s2">&quot;Ini
 user@pc:~/repo<span class="nv">$ </span>git push
 <span class="c"># Por ahí se nos va la app!</span>
 </pre></div>
-<p>Luego que termine el deployment de tu app, si visitas la URL deberías ver tu app corriendo sin ningun problema. Aveces me gusta revisar que la base de datos hizo bien las migraciones. Para eso usas PHPMyAdmin. Si no lo agregaste al comienzo del tutorial, puedes agregar el cartucho ahora.</p>
+<p>Luego que termine el deployment de tu app, si visitas la URL deberías ver tu app corriendo sin ningún problema. Aveces me gusta revisar que la base de datos hizo bien las migraciones. Para eso usas PHPMyAdmin. Si no lo agregaste al comienzo del tutorial, puedes agregar el cartucho ahora.</p>
 <p>Espero que hayas podido hacer tu deployment sin problema, y cualquier cosa, ¡No dudes en contactarme!.</p>
 <p>Especiales agradecimientos al usuario <a class="reference external" href="http://stackoverflow.com/users/1105249/luis-masuelli">Luis Masuelli</a> de Stack-Overflow, que hizo <a class="reference external" href="http://stackoverflow.com/questions/26871381/deploying-a-local-django-app-using-openshift/26874375#26874375">este maravilloso aporte</a>.</p>
-<p>Hasta la proxima.</p>
+<p>Hasta la próxima.</p>
 </div>
 
   </div>

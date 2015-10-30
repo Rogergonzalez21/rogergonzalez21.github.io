@@ -18,7 +18,7 @@
   <meta name="description" content="Posts and writings by Roger González">
 
 
-<meta name="keywords" content="django, proyecto, python, tutorial">
+<meta name="keywords" content="django, python, tutorial">
 
   <title>
     Roger González - rogergonzalez.com.ve
@@ -94,7 +94,7 @@
 </div>
 <div class="section" id="y-que-paginas-web-utilizan-django">
 <h2>¿Y qué páginas web utilizan Django?</h2>
-<p>Buena pregunta, mi querido Padawan. Aquí te muestro 3 aplicaciónes grandes que usan Django:</p>
+<p>Buena pregunta, mi querido Padawan. Aquí te muestro 3 aplicaciones grandes que usan Django:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://disqus.com/home/explore/">Disqus</a></li>
 </ul>
@@ -104,17 +104,17 @@
 <li><a class="reference external" href="https://instagram.com/">Instagram</a></li>
 </ul>
 <a class="reference external image-reference" href="https://instagram.com/"><img alt="Instagram" src="http://localhost:8000/es/../images/django_tutorial/instagram.png" /></a>
-<p>El sitio superpopular de compartir fotos tambien está hecho en Django.</p>
+<p>El sitio superpopular de compartir fotos también está hecho en Django.</p>
 <ul class="simple">
 <li><a class="reference external" href="https://pinterest.com/">Pinterest</a></li>
 </ul>
 <a class="reference external image-reference" href="https://pinterest.com/"><img alt="Pinterest" src="http://localhost:8000/es/../images/django_tutorial/pinterest.png" /></a>
-<p>Django es popular entre los sítios de imagenes, porque provee todas las herramientas que se necesitan para <strong>escalar</strong> y soportar miles de vistas inmediatas de contenido.</p>
-<p><a class="reference external" href="http://codecondo.com/popular-websites-django/">Aquí</a> tienes mas páginas hechas con Django.</p>
+<p>Django es popular entre los sitios de imágenes, porque provee todas las herramientas que se necesitan para <strong>escalar</strong> y soportar miles de vistas inmediatas de contenido.</p>
+<p><a class="reference external" href="http://codecondo.com/popular-websites-django/">Aquí</a> tienes más páginas hechas con Django.</p>
 </div>
 <div class="section" id="convencido-entonces-comencemos-instalando-los-paquetes-requeridos">
 <h2>¿Convencido? Entonces comencemos instalando los paquetes requeridos.</h2>
-<p>Voy a asumir que estás usando Ubuntu Linux. Si tienes la ultima vesión, ya tienes Python instalado.</p>
+<p>Voy a asumir que estás usando Ubuntu Linux. Si tienes la última versión, ya tienes Python instalado.</p>
 <p>Primero, tienes que instalar los paquetes de desarrollo, el <a class="reference external" href="https://virtualenv.pypa.io/en/latest/">virtual environment</a> y <a class="reference external" href="https://es.wikipedia.org/wiki/Pip_%28administrador_de_paquetes%29">pip</a>.</p>
 <div class="highlight"><pre>user@pc:~<span class="nv">$ </span>sudo apt-get install python-dev virtualenv python-pip
 </pre></div>
@@ -134,7 +134,7 @@ New python executable in env/bin/python
 user@pc:~/proyecto<span class="nv">$ </span><span class="nb">source </span>env/bin/activate
 <span class="o">(</span>env<span class="o">)</span>user@pc:~/proyecto<span class="err">$</span>
 </pre></div>
-<p>Ya estamos dentro de nuestro virtualenv (¿Ven como bash cambió el comienzo de nuestra linea? ahora comienza con <code>env</code>). Igual, podemos revisar qué versión de Python estamos usando si escribimos en nuestro terminal <code>which python</code></p>
+<p>Ya estamos dentro de nuestro virtualenv (¿Ven como bash cambió el comienzo de nuestra línea? ahora comienza con <code>env</code>). Igual, podemos revisar qué versión de Python estamos usando si escribimos en nuestro terminal <code>which python</code></p>
 <div class="highlight"><pre><span class="o">(</span>env<span class="o">)</span>user@pc:~/proyecto<span class="nv">$ </span>which python
 /home/user/proyecto/env/bin/python
 </pre></div>
@@ -147,7 +147,7 @@ Collecting django
 <div class="section" id="espera-espera-que-esta-pasando-aqui">
 <h2>Espera, espera. ¿Qué está pasando aquí?</h2>
 <p>Usando el administrador de paquetes de Python, <code>pip</code> instalamos los paquetes <strong>directamente en nuestro virtualenv</strong>, así no necesitamos el uso de <code>sudo</code>, porque no lo vamos a instalar como un paquete global.</p>
-<p>Luego de que instalamos Django, podemos ejecutar el creador de aplicaciónes automático de Django. Vamos a crear un proyecto que se llame <code>tests</code></p>
+<p>Luego de que instalamos Django, podemos ejecutar el creador de aplicaciones automático de Django. Vamos a crear un proyecto que se llame <code>tests</code></p>
 <div class="highlight"><pre><span class="o">(</span>env<span class="o">)</span>user@pc:~/proyecto<span class="nv">$ </span>django-admin.py startproject tests
 
 <span class="c"># Revisamos si todo fué creado correctamente</span>
@@ -177,8 +177,8 @@ Quit the server with CONTROL-C.
 </div>
 <div class="section" id="funciono-aplausos-para-ti">
 <h2>¡Funcionó! ¡Aplausos para tí!</h2>
-<p>Igualmente, esto no es todo. Solo hemos configurado tu primer proyecto. Aún faltan crear tu aplicación, sus vistas, modelos, templates y por ultimo, aprender a hacer el deployment... Pero no te asustes, todo lo cubriremos mas adelante.</p>
-<p>Mientras tanto, ¡Hasta la proxima!</p>
+<p>Igualmente, esto no es todo. Solo hemos configurado tu primer proyecto. Aún faltan crear tu aplicación, sus vistas, modelos, templates y por último, aprender a hacer el deployment... Pero no te asustes, todo lo cubriremos más adelante.</p>
+<p>Mientras tanto, ¡Hasta la próxima!</p>
 </div>
 
   </div>
@@ -186,7 +186,7 @@ Quit the server with CONTROL-C.
     <p>Posted on: 25/10/2015</p>
     <p>Category: <a href="http://localhost:8000/es/category/programacion/">Programación</a>
  &ndash; Tags:
-      <a href="http://localhost:8000/es/tag/django/">django</a>,      <a href="http://localhost:8000/es/tag/proyecto/">proyecto</a>,      <a href="http://localhost:8000/es/tag/python/">python</a>,      <a href="http://localhost:8000/es/tag/tutorial/">tutorial</a>    </p>
+      <a href="http://localhost:8000/es/tag/django/">django</a>,      <a href="http://localhost:8000/es/tag/python/">python</a>,      <a href="http://localhost:8000/es/tag/tutorial/">tutorial</a>    </p>
   </div>
 
   <div id="article_comments">
