@@ -18,10 +18,11 @@
   <meta name="description" content="Posts and writings by Roger González">
 
 
+<meta name="keywords" content="django, python">
 
   <title>
     Roger González - rogergonzalez.com.ve
-&ndash; Tag: django  </title>
+&ndash; ¿Cómo configurar tu primer proyecto de Django? Parte II  </title>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -71,25 +72,56 @@
     <header>
       <p>
       <a href="rogerandresgonzalez.com.ve/es">Index</a> &brvbar; <a href="rogerandresgonzalez.com.ve/es/archives.html">Archives</a>
-&gt; Tag: django
       </p>
     </header>
 -->
 <article>
   <div class="article_title">
-    <h3><a href="rogerandresgonzalez.com.ve/es/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/">¿Cómo configurar tu primer proyecto de Django? Parte I</a></h3>
+    <h3><a href="rogerandresgonzalez.com.ve/es/drafts/como-configurar-tu-primer-proyecto-de-django-parte-II/">¿Cómo configurar tu primer proyecto de Django? Parte II</a></h3>
   </div>
   <div class="article_text">
-    <p class="first last">Es hora de hacer tu primera aplicación web. En este pequeño tutorial, te voy a enseñar a configurar tu primer proyecto con Django.</p>
+    <p>Continuando el ultimo tutorial, ya tenemos nuestro proyecto de Django completamente funcional, pero aún nos falta crear nuestra primera <strong>aplicación</strong>.</p>
+<div class="section" id="pense-que-eso-es-lo-que-ya-teniamos-que-esta-pasando">
+<h2>Pensé que eso es lo que ya teníamos, ¿Qué está pasando?</h2>
+<p>Una 'aplicación' de Django no es lo mismo que un 'proyecto' de Django. ¿Por qué? Un proyecto es donde viven tus aplicaciónes. En un proyecto puedes tener 'n' aplicaciones, ordenadas y funcionando de forma conjunta. Eso no quiere decir que una aplicación no funcione en otro proyecto, todo lo contrario. El proyecto solo se encarga de mantener tu/tus aplicacion/es ordenada/s y en un mismo sitio.</p>
+<p>Para iniciar tu primera aplicación, debes estar en la carpeta del proyecto (donde está <code>manage.py</code>), y teclear lo siguiente:</p>
+<div class="highlight"><pre><span class="o">(</span>env<span class="o">)</span>user@pc:~/proyecto/tests<span class="nv">$ </span>python manage.py startapp app_test
+</pre></div>
+<p>Esto dará inicio a la aplicación &quot;app_test&quot;. si accecemos y hacemos <code>ls</code>, nos va a mostrar su contenido.</p>
+<div class="highlight"><pre><span class="o">(</span>env<span class="o">)</span>user@pc:~/proyecto/tests<span class="nv">$ </span><span class="nb">cd </span>app_test
+<span class="o">(</span>env<span class="o">)</span>../app_test<span class="nv">$ </span>ls
+
+admin.py
+__init__.py
+migrations/
+models.py
+tests.py
+views.py
+</pre></div>
+</div>
 
   </div>
+  <div class="article_meta">
+    <p>Posted on: 25/10/2015</p>
+    <p>Category: <a href="rogerandresgonzalez.com.ve/es/category/programacion/">Programación</a>
+ &ndash; Tags:
+      <a href="rogerandresgonzalez.com.ve/es/tag/django/">django</a>,      <a href="rogerandresgonzalez.com.ve/es/tag/python/">python</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "drafts/como-configurar-tu-primer-proyecto-de-django-parte-II/";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://rogergonzalez21.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
 </article>
 
-<footer>
-<div id="paginator">
-
-</div>
-</footer>
 
     <div id="ending_message">
       <p>&copy; Roger González. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Forked and modified by Roger Gonzalez on <a href="https://github.com/Rogergonzalez21/pelican-svbhack" target="_blank">github</a>  </p>
