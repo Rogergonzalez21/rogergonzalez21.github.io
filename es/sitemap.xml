@@ -4,140 +4,140 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/</loc>
-<lastmod>2015-11-11T15:39:27-00:00</lastmod>
+<loc>http://rogerandresgonzalez.com.ve/es/</loc>
+<lastmod>2015-11-11T15:39:28-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/pages/about/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/pages/about/</loc>
 <lastmod>2015-10-24T15:01:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/pages/curriculum/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/pages/curriculum/</loc>
 <lastmod>2015-10-24T15:08:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/</loc>
 <lastmod>2015-11-10T19:08:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/2015/10/descargar-ftp-usando-wget-y-cron/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/2015/10/descargar-ftp-usando-wget-y-cron/</loc>
 <lastmod>2015-10-30T16:10:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/2015/10/enviar-un-mail-con-mailx/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/2015/10/enviar-un-mail-con-mailx/</loc>
 <lastmod>2015-10-30T15:59:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/</loc>
 <lastmod>2015-10-25T19:08:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/category/programacion/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/category/programacion/</loc>
 <lastmod>2015-11-10T19:08:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/category/tutoriales/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/category/tutoriales/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/ftp/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/ftp/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/script/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/script/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/python/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/python/</loc>
 <lastmod>2015-11-10T19:08:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/mailx/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/mailx/</loc>
 <lastmod>2015-10-30T15:59:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/django/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/django/</loc>
 <lastmod>2015-11-10T19:08:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/cron/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/cron/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/mail/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/mail/</loc>
 <lastmod>2015-10-30T15:59:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/wget/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/wget/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/descargar/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/descargar/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/tag/bash/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/tag/bash/</loc>
 <lastmod>2015-10-30T16:10:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>http://rogerandresgonzalez.com.ve/author/roger-gonzalez/</loc>
+<loc>http://rogerandresgonzalez.com.ve/es/author/roger-gonzalez/</loc>
 <lastmod>2015-11-10T19:08:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
