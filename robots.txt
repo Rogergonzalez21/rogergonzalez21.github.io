@@ -1,5 +1,5 @@
 User-Agent: *
-Disallow: 
+Disallow: /drafts
 Allow: /
 
 Sitemap: http://rogerandresgonzalez.com.ve/sitemap.xml
