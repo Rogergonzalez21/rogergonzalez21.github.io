@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roger Andrés González - rogerandresgonzalez.com.ve</title><link href="http://rogerandresgonzalez.com.ve/" rel="alternate"></link><link href="http://rogerandresgonzalez.com.ve/feeds/tutoriales.atom.xml" rel="self"></link><id>http://rogerandresgonzalez.com.ve/</id><updated>2015-10-30T16:10:00-05:30</updated><entry><title>¿Cómo descargar automáticamente de un FTP usando wget y cron?</title><link href="http://rogerandresgonzalez.com.ve/2015/10/descargar-ftp-usando-wget-y-cron/" rel="alternate"></link><updated>2015-10-30T16:10:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-10-30:2015/10/descargar-ftp-usando-wget-y-cron/</id><summary type="html">&lt;p&gt;Hace unos días me mandaron a configurar una PC prehistorica para hacer respaldos automáticos de un servidor web. Una antigua Intel Dual Core con 2GB de Ram y un HDD de 320GB (los respaldos no son tan pesados, 8GB a lo sumo).&lt;/p&gt;
+&lt;p&gt;Lo mejor del proyecto: Me dieron total libertad. Por eso, decidí instalar &lt;a class="reference external" href="http://lubuntu.net/"&gt;Lubuntu 15.10&lt;/a&gt; (recien salido del horno) en contra del equipo de Windowseros TI que hay en la empresa.&lt;/p&gt;
+&lt;p&gt;Ya que la PC tenía Lubuntu, me dispuse a buscar opciones para descargar por FTP, y me consigo con wget, la herramienta de descargas que viene preinstalada en todas las distro Debian-based.&lt;/p&gt;
+&lt;div class="section" id="que-es-wget"&gt;
+&lt;h2&gt;¿Qué es wget?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://es.wikipedia.org/wiki/GNU_Wget"&gt;wget&lt;/a&gt; es una herramienta libre que permite la descarga de contenidos desde servidores web de una forma simple. Se caracteriza por ser muy &lt;strong&gt;robusta&lt;/strong&gt; desde su lanzamiento en 1996 (justo en el boom de popularidad de la web).&lt;/p&gt;
+&lt;p&gt;¡Ya tengo la herramienta para hacer los backups! y lo mejor es que &lt;strong&gt;viene incluida en la distribución&lt;/strong&gt;, por lo que no tengo que instalar paquetes externos.&lt;/p&gt;
+&lt;p&gt;Ahora, para programar las descargas me propuse usar &lt;strong&gt;cron&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="que-es-cron"&gt;
+&lt;h2&gt;¿Qué es cron?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://es.wikipedia.org/wiki/Cron_%28Unix%29"&gt;cron&lt;/a&gt; es un &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Demonio_%28inform%C3%A1tica%29"&gt;demonio&lt;/a&gt; que ejecuta procesos o &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Script"&gt;scripts&lt;/a&gt; a cierto minuto, hora, dia, semana o mes.&lt;/p&gt;
+&lt;p&gt;Ya que sabía lo que tenía que hacer, solo faltaba ponerme manos a la obra.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="manos-a-la-obra"&gt;
+&lt;h2&gt;Manos a la obra&lt;/h2&gt;
+&lt;p&gt;Primero, tenía que crear el script de &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Bash"&gt;bash&lt;/a&gt; &lt;code&gt;(.sh)&lt;/code&gt; que se iba a ejecutar. El script tiene que:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Acceder a la carpeta de backups&lt;/li&gt;
+&lt;li&gt;Crear una carpeta con la fecha del día del backup&lt;/li&gt;
+&lt;li&gt;Descargar todo del FTP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ok, ¡Empecemos!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#! /bin/bash&lt;/span&gt;
+
+&lt;span class="nv"&gt;today&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +&lt;span class="s2"&gt;&amp;quot;%d_%m_%Y&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; ~/backups
+mkdir &lt;span class="nv"&gt;$today&lt;/span&gt;
+
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$today&lt;/span&gt;
+user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mailx -s &lt;span class="s2"&gt;&amp;quot;¡Backup comenzado!&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;correo_destinatario@servidor.com&amp;quot;&lt;/span&gt; &amp;lt; /dev/null
+wget --timeout &lt;span class="m"&gt;20&lt;/span&gt; -m -nH --user &lt;span class="s2"&gt;&amp;quot;ftpuser&amp;quot;&lt;/span&gt; --password &lt;span class="s2"&gt;&amp;quot;ftppassword&amp;quot;&lt;/span&gt; ftp://ftpserver.com
+user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mailx -s &lt;span class="s2"&gt;&amp;quot;¡Backup terminado!&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;correo_destinatario@servidor.com&amp;quot;&lt;/span&gt; &amp;lt; /dev/null
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;¡No te asustes! Voy a explicar paso a paso lo que hace cada uno de los comandos.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;code&gt;#! /bin/bash&lt;/code&gt;: Sirve para indicar que lo que viene es un script de bash.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;today=`date +&amp;quot;%d_%m_%Y&amp;quot;`&lt;/code&gt;: Guarda la fecha de hoy, en formato 'dia_mes_Año', en la variable 'today'.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd ~/backups&lt;/code&gt;:  Entra a una carpeta llamada 'backups', que voy a crear más adelante.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkdir $today&lt;/code&gt;: Crea una carpeta con el día de hoy ('dia_mes_Año').&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd $today&lt;/code&gt;: Accede a la carpeta creada.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mailx -s&lt;/code&gt;: mailx es un programa que se usa para mandar correos. En &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/enviar-un-mail-con-mailx/"&gt;esta&lt;/a&gt; entrada puedes saber mas de eso.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Aquí me voy a detener un poco y explicar pausadamente.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;code&gt;wget --timeout 20 -m -nh&lt;/code&gt;: Ejecuta wget con los parámetros:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--timeout 20&lt;/code&gt;, para que reintente luego de 20 segundos de inactividad.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-m&lt;/code&gt; para especificar que está haciendo un mirror.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-nH&lt;/code&gt;, que especifica que no cree una subcarpeta, sino que descargue todo en donde está.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--user &amp;quot;ftpuser&amp;quot; --password &amp;quot;ftppassword&amp;quot; ftp://ftpserver.com&lt;/code&gt;: Son los datos de conexión de nuestro FTP. Debemos reemplazar cada uno de los campos con nuestros propios datos.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ya-que-tenemos-nuestro-script-configuremos-cron"&gt;
+&lt;h2&gt;Ya que tenemos nuestro script, configuremos cron&lt;/h2&gt;
+&lt;p&gt;La configuración de cron es muchisimo mas sencilla. En nuestro terminal colocamos:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;crontab -e
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;(Aveces advierte que no tienes un editor predeterminado. Elegimos 'nano' o el de nuestra preferencia).&lt;/p&gt;
+&lt;p&gt;Se va a abrir nuestro archivo crontab. Si vamos a la última parte, veremos que podemos agregar nuevas instrucciones.&lt;/p&gt;
+&lt;p&gt;Los formatos de las instrucciones de crontab son las siguientes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;a b c d e /ruta/del/script.sh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Donde:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;a = minuto (0-59)&lt;/li&gt;
+&lt;li&gt;b = hora (0-23, 0 = medianoche)&lt;/li&gt;
+&lt;li&gt;c = dia (1-31)&lt;/li&gt;
+&lt;li&gt;d = mes (1-12)&lt;/li&gt;
+&lt;li&gt;e = dia de la semana (0,6, 0 = domingo)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;También podemos colocar '*' en día, mes y día de la semana, para especificar &amp;quot;cualquiera&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Con esta información, construí mi crontab:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="m"&gt;30&lt;/span&gt; &lt;span class="m"&gt;17&lt;/span&gt; * * 2,4 /scripts/backup.sh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;El script será ejecutado cada &lt;strong&gt;martes&lt;/strong&gt; y &lt;strong&gt;jueves&lt;/strong&gt;, a las &lt;strong&gt;5:30PM&lt;/strong&gt;. &lt;a class="reference external" href="https://help.ubuntu.com/community/CronHowto"&gt;Aquí&lt;/a&gt; tienes más información para crear tus propios cron.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusión&lt;/h2&gt;
+&lt;p&gt;wget y cron son herramientas poderosas que vienen con nuestros sistemas operativos Linux, que con los conocimientos correctos pueden ser nuestras mejores amigas.&lt;/p&gt;
+&lt;p&gt;cron puede ser usado para muchas cosas de automatización, y wget tiene muchísimas más opciones además de descargar de un FTP. Te invito a leer cada uno de sus manuales (&lt;code&gt;man wget&lt;/code&gt; y &lt;code&gt;man cron&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Hasta la próxima.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="wget"></category><category term="cron"></category><category term="ftp"></category><category term="descargar"></category><category term="script"></category><category term="bash"></category></entry><entry><title>¿Cómo enviar un mail desde el terminal con mailx?</title><link href="http://rogerandresgonzalez.com.ve/2015/10/enviar-un-mail-con-mailx/" rel="alternate"></link><updated>2015-10-30T15:59:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-10-30:2015/10/enviar-un-mail-con-mailx/</id><summary type="html">&lt;p&gt;Hoy vengo con un tutorial un poco más corto y directo al grano. &lt;strong&gt;¿Cómo envío un correo por bash?&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;La respuesta, mailx&lt;/p&gt;
+&lt;div class="section" id="que-es-mailx"&gt;
+&lt;h2&gt;¿Qué es mailx?&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://es.wikipedia.org/wiki/Mailx"&gt;mailx&lt;/a&gt; es un programa para enviar y recibir correo. También, es una versión mejorada de 'mail' en Unix. &lt;strong&gt;mailx&lt;/strong&gt; es una herramienta muy útil para mandar correos por bash, ya que podemos &lt;strong&gt;usarlo en un script&lt;/strong&gt; &lt;code&gt;.sh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Su instalación es muy sencilla:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install mailutils
+
+&lt;span class="c"&gt;# Cuando nos salga una ventana preguntando la configuración, seleccionamos la segunda&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ya que tenemos mailx instalado, podemos hacer uso de ella.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="primeros-pasos-con-mailx"&gt;
+&lt;h2&gt;Primeros pasos con mailx&lt;/h2&gt;
+&lt;p&gt;mailx es muy sencillo de utilizar. Podemos hacerlo de esta forma:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mailx -s &lt;span class="s2"&gt;&amp;quot;Asunto del mail&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;correo_destinatario@servidor.com&amp;quot;&lt;/span&gt;
+Cc: correo_de_copia@servidor.com
+Hola! Soy un correo de mailx!
+
+&lt;span class="c"&gt;# Presionamos Cntrl + D para enviar el correo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="que-pasa-aqui"&gt;
+&lt;h3&gt;¿Qué pasa aquí?&lt;/h3&gt;
+&lt;p&gt;Primero, estamos ejecutando &lt;code&gt;mailx&lt;/code&gt; con el parámetro &lt;code&gt;-s&lt;/code&gt;, que permite añadir un asunto al mail (&amp;quot;Asunto del mail&amp;quot;), y por último, el correo destinatario (&amp;quot;&lt;a class="reference external" href="mailto:correo_destinatario&amp;#64;servidor.com"&gt;correo_destinatario&amp;#64;servidor.com&lt;/a&gt;&amp;quot;).&lt;/p&gt;
+&lt;p&gt;Cuando presionamos enter, mailx nos da opciones de agregar un 'Cc' (Con copia) y el cuerpo del correo.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pero-esto-no-es-muy-automatico-como-puedo-usarlo-en-un-script"&gt;
+&lt;h3&gt;Pero esto no es muy automático... ¿Cómo puedo usarlo en un script?&lt;/h3&gt;
+&lt;p&gt;Hay muchas formas de usarlo en un script, pero yo uso solo 2.&lt;/p&gt;
+&lt;p&gt;La primera, solo envía un correo con &amp;quot;Asunto&amp;quot;, pero sin cuerpo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mailx -s &lt;span class="s2"&gt;&amp;quot;Asunto del mail&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;correo_destinatario@servidor.com&amp;quot;&lt;/span&gt; &amp;lt; /dev/null
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esta ejecución de mailx nos va a enviar un correo con asunto &amp;quot;Asunto del mail&amp;quot;. Así de sencillo.&lt;/p&gt;
+&lt;p&gt;Si queremos que nos mande un correo con asunto y cuerpo, podemos usar:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mailx -s &lt;span class="s2"&gt;&amp;quot;Asunto del mail&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;correo_destinatario@servidor.com&amp;quot;&lt;/span&gt; &amp;lt; cuerpo-del-mensaje.txt
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Dónde 'cuerpo-del-mensaje.txt' sea un archivo de texto plano que contenga el mensaje que quieres que sea enviado.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="eso-es-todo"&gt;
+&lt;h2&gt;¡Eso es todo!&lt;/h2&gt;
+&lt;p&gt;Usar mailx es muy util para multiples cosas. Yo lo uso cuando programo un &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/descargar-ftp-usando-wget-y-cron/"&gt;script con cron&lt;/a&gt; y &lt;strong&gt;quiero que me avise cuando se ejecute y cuando termine&lt;/strong&gt;. ¿Para qué lo usarías tu?&lt;/p&gt;
+&lt;p&gt;Hasta la próxima.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="mail"></category><category term="mailx"></category><category term="bash"></category><category term="script"></category></entry></feed>

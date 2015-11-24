@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roger Andrés González - rogerandresgonzalez.com.ve</title><link href="http://rogerandresgonzalez.com.ve/" rel="alternate"></link><link href="http://rogerandresgonzalez.com.ve/feeds/programacion.atom.xml" rel="self"></link><id>http://rogerandresgonzalez.com.ve/</id><updated>2015-11-24T15:31:00-05:30</updated><entry><title>¿Cómo configurar tu primer proyecto de Django? Parte III</title><link href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/" rel="alternate"></link><updated>2015-11-24T15:31:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-11-24:2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/</id><summary type="html">&lt;p&gt;Siguiendo desde el &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;último tutorial&lt;/a&gt;, hoy vamos a usar el Django Admin y vamos a hacer nuestro primer formulario.&lt;/p&gt;
+&lt;div class="section" id="que-es-el-django-admin"&gt;
+&lt;h2&gt;¿Qué es el Django admin?&lt;/h2&gt;
+&lt;p&gt;El &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/"&gt;Django admin&lt;/a&gt; es uno de los mejores elementos que tiene Django para el desarrollo web. Django automáticamente trae una interfaz de administrador, que lee tus modelos y te da opciones para añadir, editar y eliminar registros en tu base de datos. ¿Bastante útil, no?.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="como-accedo-al-django-admin"&gt;
+&lt;h2&gt;¿Cómo accedo al Django admin?&lt;/h2&gt;
+&lt;p&gt;Con nuestra &lt;strong&gt;aplicación corriendo&lt;/strong&gt;, vamos al navegador a la dirección &lt;code&gt;localhost:8000/admin&lt;/code&gt;, y vamos a conseguir esto:&lt;/p&gt;
+&lt;img alt="django admin" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-login.png" /&gt;
+&lt;p&gt;Para entrar, usamos los datos del superusuario, que creamos en el tutorial anterior. Al entrar, nos conseguimos con el panel de administración de Django, pero con un problema: &lt;strong&gt;no hay modelos para editar&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Para registrar tus modelos, tienes que añadir lo siguiente en &lt;code&gt;app_test/admin.py&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;admin&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app_test.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;
+
+&lt;span class="n"&gt;admin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Person&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si actualizamos en el navegador, veremos nuestro modelo listo para añadir, editar o eliminar registros.&lt;/p&gt;
+&lt;img alt="django admin model registration" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-model-registration.png" /&gt;
+&lt;p&gt;Si hacemos click en &amp;quot;Add&amp;quot; en el apartado de &amp;quot;Persons&amp;quot;, podemos añadir a una persona.&lt;/p&gt;
+&lt;img alt="django admin model registration" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-add-person.png" /&gt;
+&lt;p&gt;Finalmente, si volvemos a &lt;code&gt;localhost:8000/index&lt;/code&gt;, vamos a ver a nuestra persona recientemente creada.&lt;/p&gt;
+&lt;img alt="primera persona" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/first-person.png" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pero-espera-esto-no-es-para-nada-practico"&gt;
+&lt;h2&gt;Pero espera, esto no es para nada práctico&lt;/h2&gt;
+&lt;p&gt;En lo más mínimo esto es práctico. Si estamos haciendo una aplicación para el público, es imposible pedirle a cada persona que la quiera usar que entre en el panel de administración para registrarse. Entonces, ¿Qué usamos para añadir nuevos registros a la base de datos? Claro que si, campeon. Un formulario.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creando-nuestro-primer-formulario"&gt;
+&lt;h2&gt;Creando nuestro primer formulario&lt;/h2&gt;
+&lt;p&gt;Primero, tenemos que crear el archivo &lt;code&gt;app_test/forms.py&lt;/code&gt;. Allí, vamos a colocar lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;forms&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app_test.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PersonForm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;forms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ModelForm&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;forms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Nombre&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;forms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;EmailField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Correo electrónico&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;phone_num&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;forms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Teléfono&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;forms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Dirección&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;
+        &lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;phone_num&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;address&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Voy a explicar paso a paso lo que está pasando.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Primero hacemos los imports. Importamos &lt;code&gt;forms&lt;/code&gt; y nuestro modelo, &lt;code&gt;Person&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Creamos una clase llamada &amp;quot;PersonForm&amp;quot; que hereda de &lt;code&gt;forms.ModelForm&lt;/code&gt;. En Django, los formularios son Clases.&lt;/li&gt;
+&lt;li&gt;Creamos cada uno de los campos, exactamente como en los modelos, pero esta vez viniendo de &amp;quot;Forms&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Usamos la subclase &lt;code&gt;Meta&lt;/code&gt; para definir que estamos usando un modelo, y cuáles de los campos vamos a llenar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;¡Y listo! Ya tenemos nuestro formulario listo, y podemos usarlo en nuestras vistas.&lt;/p&gt;
+&lt;p&gt;En &lt;code&gt;app_test/views.py&lt;/code&gt;, creamos la siguiente vista:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.shortcuts&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;redirect&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app_test.forms&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;PersonForm&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="c"&gt;# ...&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;addPerson&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;POST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PersonForm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;POST&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_valid&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;commit&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redirect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;errors&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PersonForm&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;add_person.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;form&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;En esta vista:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Importamos &lt;code&gt;redirect&lt;/code&gt;, para manejar las redirecciones de las vistas.&lt;/li&gt;
+&lt;li&gt;Creamos la vista &lt;code&gt;addPerson&lt;/code&gt;, que va a manejar nuestro formulario.&lt;/li&gt;
+&lt;li&gt;En la vista, chequeamos si se hizo una petición POST (si no sabes lo que es POST o las peticiones HTTP, puedes leerlo &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9todos_de_petici.C3.B3n"&gt;aquí&lt;/a&gt;).&lt;ul&gt;
+&lt;li&gt;Si es un POST, chequea si el formulario es válido. Si es válido, guarda en la base de datos y redirecciona a &lt;code&gt;index&lt;/code&gt;, de lo contrario, devuelve los errores del formulario.&lt;/li&gt;
+&lt;li&gt;Si no es POST, entonces devuelve el formulario vacío.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Seguidamente, creamos el template que muestre el formulario. En &lt;code&gt;app_test/templates/add_person.html&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Añadir personas&lt;span class="nt"&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Añadir personas&lt;span class="nt"&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;form&lt;/span&gt; &lt;span class="na"&gt;method=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;post&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;action=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+            {% csrf_token %}
+            {{ form.as_p }}
+            &lt;span class="nt"&gt;&amp;lt;button&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;submit&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Guardar&lt;span class="nt"&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{% url &amp;#39;index&amp;#39; %}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Volver&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Aquí hacemos uso del sistema de templates de Django, &lt;a class="reference external" href="http://jinja.pocoo.org/docs/dev/"&gt;Jinja2&lt;/a&gt;. Con &lt;code&gt;{% url 'index' %}&lt;/code&gt;, nos aseguramos que siempre ese link se dirija al URL con nombre &lt;code&gt;index&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finalmente, colocamos la nueva URL que lleva hacia la vista. En &lt;code&gt;app_test/urls.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ...&lt;/span&gt;
+
+&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^index$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;index&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^index/addPerson/$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addPerson&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;addPerson&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="c"&gt;# &amp;lt;--- Agregar esta linea!&lt;/span&gt;
+
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si vamos a &lt;code&gt;localhost:8000/index/addPerson&lt;/code&gt;, podemos ver nuestro formulario funcionando sin problemas. Si lo llenamos con datos y hacemos click en &amp;quot;Guardar&amp;quot;, volveremos a la página principal y podremos ver nuestro nuevo registro.&lt;/p&gt;
+&lt;img alt="form" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/form1.png" /&gt;
+&lt;img alt="form2" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/form2.png" /&gt;
+&lt;p&gt;Para un mejor flujo, añadimos un link a &amp;quot;Añadir personas&amp;quot; desde la página principal. En &lt;code&gt;app_test/templates/index.html&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="c"&gt;&amp;lt;!--Justo despues del cierre de la tabla--&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;a&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{% url &amp;#39;addPerson&amp;#39; %}&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;Añadir persona&lt;span class="nt"&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="y-eso-es-todo"&gt;
+&lt;h2&gt;¡Y eso es todo!&lt;/h2&gt;
+&lt;p&gt;Ahora tu proyecto debe verse &lt;a class="reference external" href="https://github.com/Rogergonzalez21/django-tutorial/tree/bc9346efde23714d360e1170c18268535ed98871"&gt;así&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Aún falta mucho por cubrir, pero no hay tanto tiempo. Aún se le podría agregar &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/howto/static-files/"&gt;archivos estáticos&lt;/a&gt;, como hojas de estilo CSS, o scripts en JavaScript, y muchísimas otras cosas mas. Recuerda que el objetivo principal de este tutorial es demostrar lo sencillo que es crear una aplicación con Django.&lt;/p&gt;
+&lt;p&gt;En un próximo post, haré un tutorial para hacer deploy de tu aplicación de Django en OpenShift.&lt;/p&gt;
+&lt;p&gt;¡Hasta la próxima!&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/"&gt;Parte 1: Preparando nuestro proyecto de Django&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;Parte 2: Aplicación, Vistas, Modelos, Templates y URLS&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="django"></category><category term="python"></category></entry><entry><title>¿Cómo configurar tu primer proyecto de Django? Parte II</title><link href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/" rel="alternate"></link><updated>2015-11-10T19:08:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-11-10:2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/</id><summary type="html">&lt;p&gt;Continuando el &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/"&gt;último tutorial&lt;/a&gt;, ya tenemos nuestro proyecto de Django completamente funcional, pero aún nos falta crear nuestra primera &lt;strong&gt;aplicación&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Nota: El motivo de este tutorial &lt;strong&gt;no&lt;/strong&gt; es crear una aplicación, sino aprender lo básico para hacer una aplicación con Django&lt;/p&gt;
+&lt;div class="section" id="pense-que-eso-es-lo-que-ya-teniamos-que-esta-pasando"&gt;
+&lt;h2&gt;Pensé que eso es lo que ya teníamos, ¿Qué está pasando?&lt;/h2&gt;
+&lt;p&gt;Una 'aplicación' de Django no es lo mismo que un 'proyecto' de Django. ¿Por qué? Un proyecto es donde viven tus aplicaciones. En un proyecto puedes tener 'n' aplicaciones, ordenadas y funcionando de forma conjunta. Eso no quiere decir que una aplicación no funcione en otro proyecto, todo lo contrario. El proyecto solo se encarga de mantener tu/tus aplicacion/es ordenada/s y en un mismo sitio.&lt;/p&gt;
+&lt;p&gt;Para iniciar tu primera aplicación, debes estar en la carpeta del proyecto (donde está &lt;code&gt;manage.py&lt;/code&gt;), y teclear lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py startapp app_test
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esto dará inicio a la aplicación &amp;quot;app_test&amp;quot;. si accedemos y hacemos &lt;code&gt;ls&lt;/code&gt;, nos va a mostrar su contenido.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;app_test
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../app_test&lt;span class="nv"&gt;$ &lt;/span&gt;ls
+
+admin.py
+__init__.py
+migrations/
+models.py
+tests.py
+views.py
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Vamos a ir viendo para que funciona cada uno de los archivos.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;code&gt;admin.py&lt;/code&gt;: Aquí se registran todos los modelos que serán manejados desde el &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/"&gt;administrador de Django&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;migrations/&lt;/code&gt;: El directorio donde se guardan las migraciones de la base de datos. Por lo general eso no se toca.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;models.py&lt;/code&gt;: En este archivo se escriben todos los modelos que van en nuestra aplicación. Si has trabajado antes con SQL, este es el &amp;quot;esquema de base de datos&amp;quot;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tests.py&lt;/code&gt;: Para hacer los tests unitarios.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;views.py&lt;/code&gt;: Aquí van cada una de las vistas de tu aplicación web, eso quiere decir, la lógica de cada pantalla que el usuario va a ver.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ya que sabemos que hace cada uno de los archivos, vamos a 'instalar' nuestra nueva aplicación en el proyecto. En nuestro archivo &lt;code&gt;tests/settings.py&lt;/code&gt; agregamos lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;INSTALLED_APPS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;django.contrib.admin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;...&amp;#39;&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;app_test&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;# &amp;lt;----- Añadir nuestra aplicación al final&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ya que nuestra aplicación está correctamente instalada, podemos empezar a hacer &lt;strong&gt;modelos&lt;/strong&gt;, &lt;strong&gt;vistas&lt;/strong&gt; y &lt;strong&gt;rutas&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="modelos"&gt;
+&lt;h2&gt;Modelos&lt;/h2&gt;
+&lt;p&gt;Los &lt;a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/db/models/"&gt;modelos&lt;/a&gt; son los encargados de crear y mantener nuestra base de datos, independientemente de que motor de base de datos estemos utilizando (MySQL, SQLServer, PostgreSQL, etc.), lo que nos permite cambiar de motor de forma muy rápida.&lt;/p&gt;
+&lt;p&gt;Para hacer un modelo básico:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Person&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;phone&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;EmailField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;120&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__unicode__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Como podemos observar, hay diferentes tipos de campos en nuestro modelo. En el ejemplo solo usamos &lt;code&gt;CharField&lt;/code&gt; y &lt;code&gt;EmailField&lt;/code&gt; pero hay muchos mas. Siempre tenemos que asegurarnos que estamos usando el correcto. En &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/models/fields/#model-field-types"&gt;esta lista&lt;/a&gt; podemos revisar todos los tipos de fields que tiene Django por defecto.&lt;/p&gt;
+&lt;p&gt;En Django también podemos establecer &lt;strong&gt;relaciones&lt;/strong&gt; entre los modelos (como en las tablas de bases de datos).&lt;/p&gt;
+&lt;p&gt;Para saber más sobre modelos de Django, te recomiendo &lt;a class="reference external" href="https://docs.djangoproject.com/en/stable/topics/db/models/"&gt;esta guia&lt;/a&gt; (en inglés).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="vistas"&gt;
+&lt;h2&gt;Vistas&lt;/h2&gt;
+&lt;p&gt;Las &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/topics/http/views/"&gt;vistas&lt;/a&gt; son las que procesan toda la lógica de lo que sucede cuando el usuario interactúa con la página web. Por ejemplo, el envío de un formulario, la petición de una lista, la edición de una serie de datos, etc.&lt;/p&gt;
+&lt;p&gt;Una vista básica sería la siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.http&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;HttpResponse&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;HttpResponse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hola mundo!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esta vista solo nos va a devolver &amp;quot;Hola Mundo!&amp;quot;, que quizá no sea lo más interesante del mundo. Vamos a realizar una vista un poco más completa.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.shortcuts&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;render&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app_test.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;persons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;index.html&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;persons&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;persons&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;En esta vista estamos haciendo varias cosas. Primero, estamos importando nuestro modelo, &lt;code&gt;Person&lt;/code&gt;, y &lt;code&gt;render&lt;/code&gt;, que nos va a formatear el contexto en una plantilla HTML.&lt;/p&gt;
+&lt;p&gt;Luego, en nuestra función &lt;code&gt;index&lt;/code&gt;, hacemos una búsqueda en nuestra base de datos que nos devuelve a todas las personas. Es lo mismo que hacer un SQL:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;Person&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Y por último, retornamos &lt;code&gt;render&lt;/code&gt; con el nombre de nuestro template (&lt;code&gt;index.html&lt;/code&gt;) y nuestro diccionario (&lt;code&gt;{'persons' : persons}&lt;/code&gt;). Más adelante veremos cómo funcionan las vistas en conjunto con los templates.&lt;/p&gt;
+&lt;p&gt;Para saber mejor cómo funcionan las vistas, te recomiendo &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/topics/http/views/"&gt;esta página&lt;/a&gt; (en inglés)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="url-s"&gt;
+&lt;h2&gt;URL's&lt;/h2&gt;
+&lt;p&gt;El concepto del URL es básico. ¿Cómo un usuario va a llegar a nuestra flamante y nueva aplicación, si no tienen cómo hacerlo? Aquí es donde llegan las URL. Las URL no son más que la dirección de las páginas de la aplicación. Cada una de las vistas de nuestra aplicación debe tener una URL para que puedan ser accedidas. Por ejemplo, &lt;code&gt;www.miaplicacionweb.com/app-test&lt;/code&gt;. Para definir nuestras URL's, tenemos que crear un archivo para colocarlas. En &lt;code&gt;tests/app_test/&lt;/code&gt; vamos a crear un archivo que se llame &lt;code&gt;urls.py&lt;/code&gt; y vamos a añadir lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app_test&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;
+
+&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^index$&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;views&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;index&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+
+    &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Aquí me voy a detener un poco.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Primero, importamos &lt;code&gt;patterns&lt;/code&gt; y &lt;code&gt;url&lt;/code&gt;, que son necesarios para la creación de URL's, y nuestras vistas.&lt;/li&gt;
+&lt;li&gt;Luego, creamos nuestros patterns. Cada pattern se compone por un &lt;code&gt;url&lt;/code&gt;, que a su vez se compone por:&lt;ul&gt;
+&lt;li&gt;Una expresión regular que dice cual es la dirección de la URL. En nuestro caso es &amp;quot;index&amp;quot;&lt;/li&gt;
+&lt;li&gt;La vista que representa&lt;/li&gt;
+&lt;li&gt;El nombre para identificar la URL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Luego de registrar los URL de la app, hay que registrar los URL del proyecto. En &lt;code&gt;tests/urls.py&lt;/code&gt; vamos a modificar lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;admin&lt;/span&gt;
+
+&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^admin/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;admin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urls&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+    &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;r&amp;#39;^&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;app_test.urls&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="c"&gt;# &amp;lt;----- Agregar esta linea!&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Siguiendo la misma lógica del anterior, el url se compone por:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Una expresión regular que dice cual es la dirección de la URL. En esta caso es ''.&lt;/li&gt;
+&lt;li&gt;Un include de nuestro archivo de URL's en la aplicación &lt;code&gt;app_test&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ya que tenemos nuestros URL's configurados, podemos acceder a nuestra vista desde el navegador. Para saber más sobre URL's, puedes investigar en &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/topics/http/urls/"&gt;este enlace&lt;/a&gt; (en inglés)&lt;/p&gt;
+&lt;p&gt;Solo falta el template para poder renderizar lo que queremos.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="templates"&gt;
+&lt;h2&gt;Templates&lt;/h2&gt;
+&lt;p&gt;Llegamos a la última parte de este tutorial. Los templates son los archivos &lt;code&gt;.html&lt;/code&gt; que se van a visualizar en el navegador. Simple, ¿no?. Para generar contenido dinámico, Django hace uso del lenguaje de templates &lt;a class="reference external" href="http://jinja.pocoo.org/docs/dev/"&gt;Jinja2&lt;/a&gt;. En nuestro directorio &lt;code&gt;app_test/&lt;/code&gt; vamos a crear una carpeta que se llame &amp;quot;templates&amp;quot; y otra que se llame &amp;quot;static&amp;quot;. En &amp;quot;templates&amp;quot; vamos a crear un archivo que se llame &lt;code&gt;index.html&lt;/code&gt; y vamos a agregar lo siguiente:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Test page&lt;span class="nt"&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Hola mundo!&lt;span class="nt"&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;table&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;thead&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;th&amp;gt;&lt;/span&gt;Nombre&lt;span class="nt"&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;th&amp;gt;&lt;/span&gt;Teléfonos&lt;span class="nt"&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;th&amp;gt;&lt;/span&gt;Email&lt;span class="nt"&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;th&amp;gt;&lt;/span&gt;Dirección&lt;span class="nt"&gt;&amp;lt;/th&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/thead&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;tbody&amp;gt;&lt;/span&gt;
+    {% for person in persons %}
+    &lt;span class="nt"&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;td&amp;gt;&lt;/span&gt;{{ person.name }}&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;td&amp;gt;&lt;/span&gt;{{ person.phone_num }}&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;td&amp;gt;&lt;/span&gt;{{ person.email }}&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;td&amp;gt;&lt;/span&gt;{{ person.address }}&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+    {% endfor %}
+    &lt;span class="nt"&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para probar todo lo que llevamos, debemos aplicar las migraciones, crear la base de datos y correr el servidor de pruebas.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../app_test&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ..
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py makemigrations app_test
+
+&lt;span class="c"&gt;# Se generan las migraciones&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py migrate
+
+&lt;span class="c"&gt;# Se crea la base de datos&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py createsuperuser
+
+&lt;span class="c"&gt;# Se crea el superusuario, lo usaremos en el siguiente paso del tutorial&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;../proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py runserver
+
+System check identified no issues &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; silenced&lt;span class="o"&gt;)&lt;/span&gt;.
+November 10, &lt;span class="m"&gt;2015&lt;/span&gt; - 12:32:06
+Django version 1.8.6, using settings &lt;span class="s1"&gt;&amp;#39;tests.settings&amp;#39;&lt;/span&gt;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si entramos en la dirección &lt;code&gt;localhost:8000/index&lt;/code&gt; o &lt;code&gt;http://127.0.0.1:8000/index&lt;/code&gt;, vamos a ver que todo está funcionando correctamente.&lt;/p&gt;
+&lt;img alt="Aplicación funcionando" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/hello_world.png" /&gt;
+&lt;p&gt;Tu proyecto ya debería de verse &lt;a class="reference external" href="https://github.com/Rogergonzalez21/django-tutorial/tree/188e15c3058ffd9b7004e880447e6b2146bdf08d"&gt;así&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Por ahora todo es muy básico, tenemos un modelo que guarda personas, una vista que devuelve una lista de personas, y un template para mostrar esa vista. En la tercera parte del tutorial vamos a aprender a hacer un formulario para añadir datos, y cómo usar el &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/"&gt;administrador de Django&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Hasta la próxima.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/"&gt;Parte 1: Preparando nuestro proyecto de Django&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/"&gt;Parte 3: Django Admin y Formularios&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="django"></category><category term="python"></category></entry><entry><title>¿Cómo configurar tu primer proyecto de Django? Parte I</title><link href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/" rel="alternate"></link><updated>2015-10-25T19:08:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-10-25:2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/</id><summary type="html">&lt;p&gt;Es hora de hacer tu primera aplicación web. En este pequeño tutorial, te voy a enseñar a configurar tu primera aplicación con Django.&lt;/p&gt;
+&lt;div class="section" id="primero-que-demonios-es-django"&gt;
+&lt;h2&gt;Primero, ¿Qué demonios es Django?&lt;/h2&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="Django" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;- Django.&lt;/em&gt;
+&lt;em&gt;- Can you spell it?&lt;/em&gt;
+&lt;em&gt;- D-J-A-N-G-O. The 'D' is silent.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://www.djangoproject.com/"&gt;Django&lt;/a&gt; es un framework web hecho completamente en Python, escalable, que ayuda a un desarrollo rápido de aplicaciones web.&lt;/p&gt;
+&lt;p&gt;Funciona con el lenguaje de programación &lt;a class="reference external" href="https://www.python.org/"&gt;Python&lt;/a&gt;, que es muy sencillo de aprender. Aquí tienes un &lt;a class="reference external" href="https://www.codecademy.com/es/tracks/python"&gt;tutorial&lt;/a&gt; muy completo y entendible.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="y-que-paginas-web-utilizan-django"&gt;
+&lt;h2&gt;¿Y qué páginas web utilizan Django?&lt;/h2&gt;
+&lt;p&gt;Buena pregunta, mi querido Padawan. Aquí te muestro 3 aplicaciones grandes que usan Django:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://disqus.com/home/explore/"&gt;Disqus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a class="reference external image-reference" href="https://disqus.com/home/explore/"&gt;&lt;img alt="Disqus" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/disqus.png" /&gt;&lt;/a&gt;
+&lt;p&gt;Si, la popular aplicación de comentarios, usada por millones de personas (¡Incluso en este sitio!), funciona con Django.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://instagram.com/"&gt;Instagram&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a class="reference external image-reference" href="https://instagram.com/"&gt;&lt;img alt="Instagram" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/instagram.png" /&gt;&lt;/a&gt;
+&lt;p&gt;El sitio superpopular de compartir fotos también está hecho en Django.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pinterest.com/"&gt;Pinterest&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a class="reference external image-reference" href="https://pinterest.com/"&gt;&lt;img alt="Pinterest" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/pinterest.png" /&gt;&lt;/a&gt;
+&lt;p&gt;Django es popular entre los sitios de imágenes, porque provee todas las herramientas que se necesitan para &lt;strong&gt;escalar&lt;/strong&gt; y soportar miles de vistas inmediatas de contenido.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://codecondo.com/popular-websites-django/"&gt;Aquí&lt;/a&gt; tienes más páginas hechas con Django.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="convencido-entonces-comencemos-instalando-los-paquetes-requeridos"&gt;
+&lt;h2&gt;¿Convencido? Entonces comencemos instalando los paquetes requeridos.&lt;/h2&gt;
+&lt;p&gt;Voy a asumir que estás usando Ubuntu Linux. Si tienes la última versión, ya tienes Python instalado.&lt;/p&gt;
+&lt;p&gt;Primero, tienes que instalar los paquetes de desarrollo, el &lt;a class="reference external" href="https://virtualenv.pypa.io/en/latest/"&gt;virtual environment&lt;/a&gt; y &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Pip_%28administrador_de_paquetes%29"&gt;pip&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install python-dev virtualenv python-pip
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Estos son todos los paquetes que necesitaremos para la instalación de nuestra primera aplicación de Django.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="iniciando-la-aplicacion"&gt;
+&lt;h2&gt;Iniciando la aplicación&lt;/h2&gt;
+&lt;p&gt;Crea un nuevo directorio, vamos a llamarlo &lt;code&gt;proyecto&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir proyecto
+user@pc:~&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;proyecto
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Dentro de &lt;code&gt;proyecto&lt;/code&gt; vamos a iniciar nuestro primer entorno virtual de desarrollo (virtualenv). &lt;strong&gt;¿Por qué necesitamos un virtualenv?&lt;/strong&gt; Porque cada proyecto puede tener sus propios paquetes con sus propias versiones. Es una buena práctica instalar los paquetes localmente en un entorno virtual por proyecto.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;virtualenv env
+New python executable in env/bin/python
+&lt;span class="c"&gt;# Se ejecutará la instalación de tu virtualenv&lt;/span&gt;
+
+user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;source &lt;/span&gt;env/bin/activate
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="err"&gt;$&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ya estamos dentro de nuestro virtualenv (¿Ven como bash cambió el comienzo de nuestra línea? ahora comienza con &lt;code&gt;env&lt;/code&gt;). Igual, podemos revisar qué versión de Python estamos usando si escribimos en nuestro terminal &lt;code&gt;which python&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;which python
+/home/user/proyecto/env/bin/python
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ahora, ¡A instalar Django!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;pip install django
+Collecting django
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="espera-espera-que-esta-pasando-aqui"&gt;
+&lt;h2&gt;Espera, espera. ¿Qué está pasando aquí?&lt;/h2&gt;
+&lt;p&gt;Usando el administrador de paquetes de Python, &lt;code&gt;pip&lt;/code&gt; instalamos los paquetes &lt;strong&gt;directamente en nuestro virtualenv&lt;/strong&gt;, así no necesitamos el uso de &lt;code&gt;sudo&lt;/code&gt;, porque no lo vamos a instalar como un paquete global.&lt;/p&gt;
+&lt;p&gt;Luego de que instalamos Django, podemos ejecutar el creador de aplicaciones automático de Django. Vamos a crear un proyecto que se llame &lt;code&gt;tests&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;django-admin.py startproject tests
+
+&lt;span class="c"&gt;# Revisamos si todo fué creado correctamente&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;ls
+env/ tests/
+
+&lt;span class="c"&gt;# Accedemos a &amp;#39;tests&amp;#39;&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;tests
+&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto/tests&lt;span class="err"&gt;$&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Dentro de &lt;code&gt;tests&lt;/code&gt; vive nuestro proyecto de Django.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="prueba-final-redobles-por-favor"&gt;
+&lt;h2&gt;Prueba final. Redobles por favor&lt;/h2&gt;
+&lt;p&gt;Ejecutemos el servidor de Django para revisar que todo esté correcto.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;env&lt;span class="o"&gt;)&lt;/span&gt;user@pc:~/proyecto/tests&lt;span class="nv"&gt;$ &lt;/span&gt;python manage.py runserver
+
+&lt;span class="c"&gt;# Quizá aparezcan unos errores, es normal&lt;/span&gt;
+
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si entramos en nuestro navegador a la dirección &lt;code&gt;http://127.0.0.1:8000/&lt;/code&gt;, nos saldrá este bello mensaje:&lt;/p&gt;
+&lt;img alt="Django" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/it_worked.png" /&gt;
+&lt;/div&gt;
+&lt;div class="section" id="funciono-aplausos-para-ti"&gt;
+&lt;h2&gt;¡Funcionó! ¡Aplausos para tí!&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/Rogergonzalez21/django-tutorial/tree/4fe1d18891dbd3d6da202a906fb064bfba357b8b"&gt;Así&lt;/a&gt; debería de verse tu proyecto ahora.&lt;/p&gt;
+&lt;p&gt;Igualmente, esto no es todo. Solo hemos configurado tu primer proyecto. Aún faltan crear tu aplicación, sus vistas, modelos, templates y por último, aprender a hacer el deployment... Pero no te asustes, todo lo cubriremos más adelante.&lt;/p&gt;
+&lt;p&gt;Mientras tanto, ¡Hasta la próxima!&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;Parte 2: Aplicación, Vistas, Modelos, Templates y URLS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/"&gt;Parte 3: Django Admin y Formularios&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="django"></category><category term="python"></category></entry></feed>
