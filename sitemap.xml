@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://rogerandresgonzalez.com.ve/</loc>
-<lastmod>2015-11-25T09:07:53-00:00</lastmod>
+<lastmod>2015-11-26T13:38:13-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -20,6 +20,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://rogerandresgonzalez.com.ve/pages/curriculum/</loc>
 <lastmod>2015-10-24T15:08:00-04:30</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://rogerandresgonzalez.com.ve/2015/11/deploy-django-a-openshift/</loc>
+<lastmod>2015-11-26T13:40:00-04:30</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -68,7 +75,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://rogerandresgonzalez.com.ve/author/roger-gonzalez/</loc>
-<lastmod>2015-11-24T15:31:00-04:28</lastmod>
+<lastmod>2015-11-26T13:40:00-04:28</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

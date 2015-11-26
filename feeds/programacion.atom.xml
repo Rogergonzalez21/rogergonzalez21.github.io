@@ -1,5 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Roger Andrés González - rogerandresgonzalez.com.ve</title><link href="http://rogerandresgonzalez.com.ve/" rel="alternate"></link><link href="http://rogerandresgonzalez.com.ve/feeds/programacion.atom.xml" rel="self"></link><id>http://rogerandresgonzalez.com.ve/</id><updated>2015-11-24T15:31:00-05:30</updated><entry><title>¿Cómo configurar tu primer proyecto de Django? Parte III</title><link href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/" rel="alternate"></link><updated>2015-11-24T15:31:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-11-24:2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/</id><summary type="html">&lt;p&gt;Siguiendo desde el &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;último tutorial&lt;/a&gt;, hoy vamos a usar el Django Admin y vamos a hacer nuestro primer formulario.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Roger Andrés González - rogerandresgonzalez.com.ve</title><link href="http://rogerandresgonzalez.com.ve/" rel="alternate"></link><link href="http://rogerandresgonzalez.com.ve/feeds/programacion.atom.xml" rel="self"></link><id>http://rogerandresgonzalez.com.ve/</id><updated>2015-11-26T13:40:00-05:30</updated><entry><title>¿Cómo hacer un deploy de una aplicación de Django a Openshift?</title><link href="http://rogerandresgonzalez.com.ve/2015/11/deploy-django-a-openshift/" rel="alternate"></link><updated>2015-11-26T13:40:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-11-26:2015/11/deploy-django-a-openshift/</id><summary type="html">&lt;p&gt;Algo muy importante luego de que haces tu aplicación en Django es hacer el deploy. ¿Como van a usar tu aplicación &lt;strong&gt;si no se puede llegar a ella&lt;/strong&gt;?.&lt;/p&gt;
+&lt;p&gt;Aquí llega Red Hat al rescate con su servicio &lt;a class="reference external" href="https://es.wikipedia.org/wiki/Computaci%C3%B3n_en_la_nube#Plataforma_como_servicio_"&gt;PaaS&lt;/a&gt;, &lt;a class="reference external" href="https://openshift.redhat.com/"&gt;OpenShift&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="que-es-openshift-eso-con-que-se-come"&gt;
+&lt;h2&gt;¿Qué es OpenShift? ¿Eso con qué se come?&lt;/h2&gt;
+&lt;p&gt;OpenShift es el servicio de &amp;quot;Plataforma-como-servicio&amp;quot; de Red Hat. Simple, ¿no?. Lo más importante que tiene OpenShift es que con su cuenta gratuita &lt;strong&gt;se pueden tener hasta 3 aplicaciones en vivo&lt;/strong&gt;, incluso con &lt;strong&gt;dominios propios&lt;/strong&gt;, características que lo convierten en una de las mejores opciones para hacer deploy de aplicaciones web.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ya-cree-mi-cuenta-en-openshift-ahora-que"&gt;
+&lt;h2&gt;Ya creé mi cuenta en OpenShift, ¿Ahora qué?&lt;/h2&gt;
+&lt;p&gt;Primero, tienes que &lt;a class="reference external" href="https://developers.openshift.com/en/getting-started-overview.html"&gt;configurar tu cuenta&lt;/a&gt;. Si no configuras tu cuenta, no podrás acceder a tus aplicaciones
+via Git.&lt;/p&gt;
+&lt;p&gt;Luego, desde tu panel de control debes &lt;strong&gt;crear tu primera aplicación&lt;/strong&gt;.&lt;/p&gt;
+&lt;img alt="Añadir aplicación" src="http://rogerandresgonzalez.com.ve/images/deploy_django/add_aplication.png" /&gt;
+&lt;p&gt;Para efectos de este tutorial, vamos a crear una aplicación de Python 2.7.&lt;/p&gt;
+&lt;img alt="Python 2.7" src="http://rogerandresgonzalez.com.ve/images/deploy_django/python_2.7.png" /&gt;
+&lt;p&gt;Llenamos toda la información que nos pide, y luego esperamos a que nos lleve al panel de control de la aplicación.
+Una vez en el panel de control, añadimos el cartucho de MySQL y el de PHPMyAdmin (opcional).&lt;/p&gt;
+&lt;p&gt;¡Ahora podemos clonar nuestro repositorio en OpenShift vía Git! En la parte derecha del panel de control
+nos dice &amp;quot;Source code&amp;quot;. Ese es el link de nuestro repositorio, al que podemos acceder con &amp;quot;git clone&amp;quot; desde el terminal.&lt;/p&gt;
+&lt;p&gt;Voy a asumir que ya tienes Git instalado y usas Ubuntu.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~/&lt;span class="nv"&gt;$ &lt;/span&gt;git clone el-link-de-tu-repositorio-aqui repo
+user@pc:~/&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;repo
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si haces &lt;code&gt;ls&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tuProyecto/
+    +---wsgi.py
+    +---setup.py
+    *---.openshift/
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Allí vas a pegar toda tu aplicación (si tienes una), o vas a crear una nueva.&lt;/p&gt;
+&lt;p&gt;Ahora viene lo básico. Crear tu virtualenv, activarlo, instalar las dependencias desde tu requirements.txt,
+etc, etc, etc...&lt;/p&gt;
+&lt;p&gt;Luego de que hagas todo esto, coloca esto en tu terminal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir wsgi
+user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir wsgi/static
+user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;touch wsgi/static/.gitkeep
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esto lo usaremos más adelante, es bueno tenerlo listo.&lt;/p&gt;
+&lt;p&gt;Si has seguido todos los pasos correctamente, deberías tener el siguiente esquema de proyecto:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tuProyecto/
++---wsgi/
+&lt;span class="p"&gt;|&lt;/span&gt;   +---static/
+&lt;span class="p"&gt;|&lt;/span&gt;       +---.gitkeep
++---wsgi.py
++---setup.py
++---.openshift/
++---tuProyectoDjango/
+&lt;span class="p"&gt;|&lt;/span&gt;   +----__init__.py
+&lt;span class="p"&gt;|&lt;/span&gt;   +----urls.py
+&lt;span class="p"&gt;|&lt;/span&gt;   +----settings.py
+&lt;span class="p"&gt;|&lt;/span&gt;   +----wsgi.py
++---+tuAppDjango/
+    +----__init__.py
+    +----models.py
+    +----views.py
+    +----tests.py
+    +----migrations
+         +---__init__.py
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="ya-el-proyecto-esta-configurado-empecemos-con-el-wsgi"&gt;
+&lt;h3&gt;Ya el proyecto está configurado. Empecemos con el &lt;a class="reference external" href="http://python.org.ar/wiki/WSGI"&gt;wsgi&lt;/a&gt;.&lt;/h3&gt;
+&lt;p&gt;Primero, debes editar el activho wsgi.py que vino directamente del repositorio de OpenShift con lo siguiente:&lt;/p&gt;
+&lt;p&gt;¡No olvides de reemplazar &lt;strong&gt;'tuProyectoDjango'&lt;/strong&gt; con el nombre de tu proyecto!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/python&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="n"&gt;virtenv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OPENSHIFT_PYTHON_DIR&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/virtenv/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;virtualenv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;virtenv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;bin/activate_this.py&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;execfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;virtualenv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__file__&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;virtualenv&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;IOError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tuProyectoDjango.wsgi&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Crea un archivo que se llame &amp;quot;build&amp;quot; (así, sin extensión), añade los siguientes scripts y guardalos en &lt;code&gt;.openshift/action_hooks&lt;/code&gt;. Estos van a ser ejecutados cada vez que se haga el deployment de la aplicación.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;#this is .openshift/action/hooks/build&lt;/span&gt;
+&lt;span class="c"&gt;#remember to make it +x so openshift can run it.&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -d &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OPENSHIFT_DATA_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;media &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    mkdir -p &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OPENSHIFT_DATA_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;media
+&lt;span class="k"&gt;fi&lt;/span&gt;
+ln -snf &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;OPENSHIFT_DATA_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;media &lt;span class="nv"&gt;$OPENSHIFT_REPO_DIR&lt;/span&gt;/wsgi/static/media
+
+&lt;span class="c"&gt;######################### end of file&lt;/span&gt;
+
+&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;#this one is the deploy hook .openshift/action_hooks/deploy&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; &lt;span class="nv"&gt;$OPENSHIFT_HOMEDIR&lt;/span&gt;/python/virtenv/bin/activate
+&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$OPENSHIFT_REPO_DIR&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Executing &amp;#39;python manage.py migrate&amp;#39;&amp;quot;&lt;/span&gt;
+python manage.py migrate
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Executing &amp;#39;python manage.py collectstatic --noinput&amp;#39;&amp;quot;&lt;/span&gt;
+python manage.py collectstatic --noinput
+
+&lt;span class="c"&gt;########################### end of file&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;El primero crea la carpeta de &amp;quot;media&amp;quot; en el root del proyecto de OpenShift si esta no existe y crea un enlace simbólico a la ruta &lt;code&gt;/wsgi/static/media&lt;/code&gt; (recuerdan cuando creamos &lt;code&gt;/wsgi/static/&lt;/code&gt;?).&lt;/p&gt;
+&lt;p&gt;El segundo, activa la virtualenv en OpenShift, ejecuta las migraciones y el &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/staticfiles/#collectstatic"&gt;collectstatic&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Debes añadir el atributo &lt;code&gt;+x&lt;/code&gt; a &lt;code&gt;.openshift/action_hooks/build&lt;/code&gt;, por lo que tienes que ejecutar lo siguiente en el terminal:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;chmod +x .openshift/action_hooks/build
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esto lo vuelve un archivo ejecutable.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="seguimos-con-las-modificaciones-en-settings"&gt;
+&lt;h3&gt;Seguimos con las modificaciones en 'settings'&lt;/h3&gt;
+&lt;p&gt;Ya que el wsgi y los hooks están listos, tienes que modificar tu archivo 'settings' para que apunte en donde estan tus archivos 'static', 'media' y 'template':&lt;/p&gt;
+&lt;p&gt;Todas estas configuraciones están hechas para correr en los sitios predeterminados. Si hiciste algún cambio, refléjalo en tus settings.&lt;/p&gt;
+&lt;p&gt;¡Recuerda reemplazar &lt;strong&gt;'tuAppDjango'&lt;/strong&gt; con el nombre de tu app!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/static/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;MEDIA_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/media/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;STATIC_ROOT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_DIR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wsgi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;MEDIA_ROOT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_DIR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;wsgi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;media&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;STATICFILES_DIRS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_DIR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tuAppDjango&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;static&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;span class="n"&gt;TEMPLATE_DIRS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_DIR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tuAppDjango&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;templates&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para finalizar, tienes que reconocer si estás en OpenShift o no, para que use tu base de datos local o la del servidor.&lt;/p&gt;
+&lt;p&gt;En tu archivo settings.py, debes agregar:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="n"&gt;BASE_DIR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__file__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="c"&gt;# Agregar esto!&lt;/span&gt;
+&lt;span class="n"&gt;ON_OPENSHIFT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;OPENSHIFT_REPO_DIR&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;ON_OPENSHIFT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;span class="c"&gt;# Fin&lt;/span&gt;
+
+&lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="c"&gt;# Database&lt;/span&gt;
+&lt;span class="c"&gt;# https://docs.djangoproject.com/en/1.7/ref/settings/#databases&lt;/span&gt;
+&lt;span class="c"&gt;# Agregar esto!&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;ON_OPENSHIFT&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;DEBUG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+    &lt;span class="n"&gt;TEMPLATE_DEBUG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+    &lt;span class="n"&gt;ALLOWED_HOSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;ENGINE&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;django.db.backends.mysql&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;NAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tu-base-de-datos-OpenShift&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;USER&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OPENSHIFT_MYSQL_DB_USERNAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;PASSWORD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OPENSHIFT_MYSQL_DB_PASSWORD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;HOST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OPENSHIFT_MYSQL_DB_HOST&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;PORT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getenv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OPENSHIFT_MYSQL_DB_PORT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;DEBUG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+    &lt;span class="n"&gt;TEMPLATE_DEBUG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+    &lt;span class="n"&gt;ALLOWED_HOSTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="n"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;ENGINE&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;django.db.backends.sqlite3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;NAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BASE_DIR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;db.sqlite3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;# Fin&lt;/span&gt;
+
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;¡Recuerda reemplazar &lt;strong&gt;'tu-base-de-datos-OpenShift'&lt;/strong&gt; con el nombre de la base de datos MySQL que te dió OpenShift!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="y-listo"&gt;
+&lt;h2&gt;¡Y listo!&lt;/h2&gt;
+&lt;p&gt;Ya todo debería de estar funcionando. en tu terminal escribe:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;git status
+&lt;span class="c"&gt;# Muestra todos los archivos que se van a agregar al commit&lt;/span&gt;
+
+user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;git add .
+user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -m &lt;span class="s2"&gt;&amp;quot;Initial commit&amp;quot;&lt;/span&gt;
+user@pc:~/repo&lt;span class="nv"&gt;$ &lt;/span&gt;git push
+&lt;span class="c"&gt;# Por ahí se nos va la app!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Luego que termine el deployment de tu app, si visitas la URL deberías ver tu app corriendo sin ningún problema. Aveces me gusta revisar que la base de datos hizo bien las migraciones. Para eso usas PHPMyAdmin. Si no lo agregaste al comienzo del tutorial, puedes agregar el cartucho ahora.&lt;/p&gt;
+&lt;p&gt;Espero que hayas podido hacer tu deployment sin problema, y cualquier cosa, ¡No dudes en contactarme!.&lt;/p&gt;
+&lt;p&gt;Especiales agradecimientos al usuario &lt;a class="reference external" href="http://stackoverflow.com/users/1105249/luis-masuelli"&gt;Luis Masuelli&lt;/a&gt; de Stack-Overflow, que hizo &lt;a class="reference external" href="http://stackoverflow.com/questions/26871381/deploying-a-local-django-app-using-openshift/26874375#26874375"&gt;este maravilloso aporte&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Hasta la próxima.&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/"&gt;Parte 1: Preparando nuestro proyecto de Django&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;Parte 2: Aplicación, Vistas, Modelos, Templates y URLS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/"&gt;Parte 3: Django Admin y Formularios&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="deploy"></category><category term="django"></category><category term="openshift"></category><category term="python"></category><category term="tutorial"></category></entry><entry><title>¿Cómo configurar tu primer proyecto de Django? Parte III</title><link href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/" rel="alternate"></link><updated>2015-11-24T15:31:00-05:30</updated><author><name>Roger González</name></author><id>tag:rogerandresgonzalez.com.ve,2015-11-24:2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/</id><summary type="html">&lt;p&gt;Siguiendo desde el &lt;a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/"&gt;último tutorial&lt;/a&gt;, hoy vamos a usar el Django Admin y vamos a hacer nuestro primer formulario.&lt;/p&gt;
 &lt;div class="section" id="que-es-el-django-admin"&gt;
 &lt;h2&gt;¿Qué es el Django admin?&lt;/h2&gt;
 &lt;p&gt;El &lt;a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/"&gt;Django admin&lt;/a&gt; es uno de los mejores elementos que tiene Django para el desarrollo web. Django automáticamente trae una interfaz de administrador, que lee tus modelos y te da opciones para añadir, editar y eliminar registros en tu base de datos. ¿Bastante útil, no?.&lt;/p&gt;
