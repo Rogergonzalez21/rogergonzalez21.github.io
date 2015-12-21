@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/youtube.css">
+  <link rel="shortcut icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="alternate" hreflang="es" href="rogerandresgonzalez.com.ve/es/" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Roger Andrés González">
+  <meta name="description" content="Posts and writings by Roger Andrés González. Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.">
+  <meta property="og:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta name="twitter:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta itemprop="image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <link href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Roger Andrés González - rogerandresgonzalez.com.ve Atom" />
+
+<meta name="keywords" content="python, pdf, reportes">
+
+  <title>
+    Roger Andrés González - rogerandresgonzalez.com.ve
+&ndash; ¿Cómo hacer un PDF con Python y HTML?  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-69257856-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside class="gray_background">
+    <div id="user_meta">
+      <a href="http://rogerandresgonzalez.com.ve">
+        <img src="http://rogerandresgonzalez.com.ve/images/yo.png" alt="logo">
+        </a>
+        <h2><a href="http://rogerandresgonzalez.com.ve">Roger Andrés González</a></h2>
+        <p>Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.</p>
+        <ul>
+        <ul class="social">
+        <li><a class="sc-linkedin white" href="https://ve.linkedin.com/in/rogergonzalez21/en" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github white" href="https://github.com/Rogergonzalez21" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-envelope-o white" href="mailto:me@rogerandresgonzalez.com.ve" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-twitter white" href="https://twitter.com/RogerGonzalez21" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+
+    <header>
+      <p>
+        / <a href="http://rogerandresgonzalez.com.ve">Home</a> /
+        <a href="/pages/about/">About</a> /
+        <a href="/pages/curriculum/">Curriculum Vitae</a> /
+        <a href="/archives/">Archive</a> /
+        <a href="/category/">Category</a> /
+        <a href="/tag/">Tags</a> /
+        <a href="/es/">Español</a> /
+        <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+<!--
+    <header>
+      <p>
+      <a href="http://rogerandresgonzalez.com.ve">Index</a> &brvbar; <a href="http://rogerandresgonzalez.com.ve/archives.html">Archives</a>
+      &brvbar; <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+      </p>
+    </header>
+-->
+<article>
+  <div class="article_title">
+    <h3><a href="http://rogerandresgonzalez.com.ve/2015/12/como-hacer-un-pdf-con-python/">¿Cómo hacer un PDF con Python y HTML?</a></h3>
+  </div>
+  <div class="article_text">
+    <p>¿Alguna vez has tenido que hacer un reporte por medio de un PDF en tu aplicación de Python? Aquí puedes aprender como hacerlo, usando <strong>xhtml2pdf</strong>.</p>
+<div class="section" id="que-es-xhtml2pdf">
+<h2>¿Qué es xhtml2pdf?</h2>
+<p><strong>xhtml2pdf</strong> es un paquete que nos permite la creación de PDF's utilizando HTML. <a class="reference external" href="https://github.com/xhtml2pdf/xhtml2pdf/blob/master/doc/usage.rst">Aquí</a> pueden encontrar la documentación completa.</p>
+<div class="section" id="instalacion">
+<h3>Instalación</h3>
+<p>Primero, necesitamos instalar los paquetes necesarios. En el terminal, colocamos:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install python-dev libjpeg-dev zlib1g-dev virtualenv
+</pre></div>
+<p>Ya que tenemos todo instalado, creamos una nueva virtualenv y la activamos.</p>
+<div class="highlight"><pre><span class="nv">$ </span>virtualenv env
+<span class="o">(</span>Se crea la virtualenv<span class="o">)</span>
+<span class="nv">$ </span><span class="nb">source </span>env/bin/activate
+<span class="o">(</span>env<span class="o">)</span> <span class="err">$</span>
+</pre></div>
+<p>Como siempre, para desactivar la virtualenv, <code>deactivate</code>.</p>
+<p>Ya que estamos en nuestra virtualenv, instalamos desde pip:</p>
+<div class="highlight"><pre><span class="o">(</span>env<span class="o">)</span> <span class="nv">$ </span>pip install xhtml2pdf jinja2
+<span class="o">(</span>Se instalan los paquetes<span class="o">)</span>
+</pre></div>
+<p>¡Y eso es todo! Ya podemos empezar a crear nuestro primer PDF.</p>
+</div>
+</div>
+<div class="section" id="creando-nuestro-primer-pdf">
+<h2>Creando nuestro primer PDF</h2>
+<p>Por lo general, hay 3 formas de crear PDF's con xhtml2PDF:</p>
+<ul class="simple">
+<li>Con un HTML estático</li>
+<li>Con un HTML dinámico</li>
+<li>Con un framework web (Django, Flask, Pyramid, etc.)</li>
+</ul>
+<div class="section" id="con-un-html-estatico">
+<h3>Con un HTML estático</h3>
+<p>Si solo necesitamos generar un reporte de un HTML estático, solo necesitamos lo siguiente:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">xhtml2pdf</span> <span class="kn">import</span> <span class="n">pisa</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)))</span>
+
+<span class="n">sourceHtml</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">&#39;ruta/a/nuestro/HTML&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">outputFilename</span> <span class="o">=</span> <span class="s">&quot;test.pdf&quot;</span>
+
+<span class="k">def</span> <span class="nf">convertHtmlToPdf</span><span class="p">(</span><span class="n">sourceHtml</span><span class="p">,</span> <span class="n">outputFilename</span><span class="p">):</span>
+    <span class="n">resultFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputFilename</span><span class="p">,</span> <span class="s">&quot;w+b&quot;</span><span class="p">)</span>
+
+    <span class="n">pisaStatus</span> <span class="o">=</span> <span class="n">pisa</span><span class="o">.</span><span class="n">CreatePDF</span><span class="p">(</span>
+            <span class="n">sourceHtml</span><span class="p">,</span>
+            <span class="n">dest</span><span class="o">=</span><span class="n">resultFile</span><span class="p">)</span>
+
+    <span class="n">resultFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">pisaStatus</span><span class="o">.</span><span class="n">err</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">pisa</span><span class="o">.</span><span class="n">showLogging</span><span class="p">()</span>
+    <span class="n">convertHtmlToPdf</span><span class="p">(</span><span class="n">sourceHtml</span><span class="p">,</span> <span class="n">outputFilename</span><span class="p">)</span>
+</pre></div>
+<p>Iré explicando poco a poco.</p>
+<ol class="arabic simple">
+<li>Importamos <code>pisa</code> (para renderizar los PDF) y <code>os</code> (para ubicar nuestro archivo HTML).</li>
+<li>Usamos <code>os</code> para leer nuestro archivo HTML y le asignamos un nombre a nuestro resultado en PDF.</li>
+<li>Creamos una función llamada <code>convertHtmlToPdf</code>, la cual recibe el HTML a renderizar y el nombre del PDF que estamos generando.</li>
+<li>En la función, creamos el archivo y renderizamos el PDF con <code>pisa.CreatePDF()</code>, definiendo nuestro HTML y el archivo PDF creado.</li>
+<li>Por último, cerramos el archivo, devolvemos los errores (en caso de existir errores) y corremos el <code>main</code></li>
+</ol>
+<p>Bastante sencillo. Podemos tener un HTML como este:</p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Hola mundo!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+<p>Y nos devolvería exactamente lo mismo, pero en un PDF.</p>
+<p>El problema de esta solución, es que no es automático. Si tenemos un script que genere cierto contenido, tendríamos que modificar el HTML a mano para crear nuestro PDF. Por eso vamos a la segunda forma de crear un PDF</p>
+</div>
+<div class="section" id="con-un-html-dinamico">
+<h3>Con un HTML dinámico</h3>
+<p>Para hacer uso de un HTML dinámico, vamos a cargar nuestros templates con <a class="reference external" href="http://jinja.pocoo.org/docs/dev/">jinja2</a>, el compilador de HTML de Django.</p>
+<p>Para eso, modificamos un poco nuestro script original:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">xhtml2pdf</span> <span class="kn">import</span> <span class="n">pisa</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Template</span> <span class="c">#Nuevo!</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)))</span>
+
+<span class="n">sourceHtml</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s">&#39;ruta/a/nuestro/HTML&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">outputFilename</span> <span class="o">=</span> <span class="s">&quot;test.pdf&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span> <span class="p">:</span> <span class="s">&#39;roger&#39;</span><span class="p">,</span> <span class="s">&#39;lastname&#39;</span> <span class="p">:</span> <span class="s">&#39;gonzalez&#39;</span><span class="p">}</span> <span class="c">#Nuevo!</span>
+
+<span class="k">def</span> <span class="nf">convertHtmlToPdf</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sourceHtml</span><span class="p">,</span> <span class="n">outputFilename</span><span class="p">):</span> <span class="c">#Nuevo!</span>
+    <span class="n">resultFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputFilename</span><span class="p">,</span> <span class="s">&quot;w+b&quot;</span><span class="p">)</span>
+
+    <span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">sourceHtml</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span> <span class="c">#Nuevo!</span>
+    <span class="n">html</span>  <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c">#Nuevo!</span>
+
+    <span class="n">pisaStatus</span> <span class="o">=</span> <span class="n">pisa</span><span class="o">.</span><span class="n">CreatePDF</span><span class="p">(</span>
+            <span class="n">html</span><span class="p">,</span>
+            <span class="n">dest</span><span class="o">=</span><span class="n">resultFile</span><span class="p">)</span>
+    <span class="n">resultFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">pisaStatus</span><span class="o">.</span><span class="n">err</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">pisa</span><span class="o">.</span><span class="n">showLogging</span><span class="p">()</span>
+    <span class="n">convertHtmlToPdf</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sourceHtml</span><span class="p">,</span> <span class="n">outputFilename</span><span class="p">)</span>
+</pre></div>
+<p>¿Qué hacen las lineas nuevas?</p>
+<ol class="arabic simple">
+<li>Importamos <code>Template</code>, que nos permitirá renderizar automáticamente los HTML.</li>
+<li>Creamos un nuevo diccionario y lo añadimos a la función. jinja2 usa diccionarios para renderizar los datos en HTML.</li>
+<li>Usamos <code>Template</code> para abrir nuestro HTML y posteriormente renderizarlo con nuestro diccionario <code>data</code></li>
+</ol>
+<p>Lo mejor de este método es que no es necesario estar pendiente de los HTML. Solo debes hacer una base y utilizar el poderoso sintaxis de jinja2.</p>
+<p>Puedes tener este HTML:</p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Hola mundo!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>{{ name }} {{ lastname }}<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+<p>El cual devolvería este PDF:</p>
+</div>
+<div class="section" id="hola-mundo">
+<h3>Hola mundo!</h3>
+<p>roger gonzalez</p>
+<p>Este es el método que más uso, cuando necesito que un script me devuelva un PDF para <a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/enviar-un-mail-con-mailx/">mandarlo por correo</a>.</p>
+<p>Por último, pero no menos importante, el método de framework web.</p>
+</div>
+<div class="section" id="con-un-html-de-un-framework-web">
+<h3>Con un HTML de un framework web</h3>
+<p>Este método es muy parecido al anterior, a excepción del uso de link callbacks para convertir los URIs de los HTML a rutas absolutas. Para este ejemplo, estoy usando Django.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">get_template</span>
+
+<span class="kn">from</span> <span class="nn">xhtml2pdf</span> <span class="kn">import</span> <span class="n">pisa</span>
+
+
+<span class="k">def</span> <span class="nf">link_callback</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">rel</span><span class="p">):</span>
+
+    <span class="n">sUrl</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">STATIC_URL</span>      <span class="c"># Typically /static/</span>
+    <span class="n">sRoot</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">STATIC_ROOT</span>    <span class="c"># Typically /home/userX/project_static/</span>
+    <span class="n">mUrl</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_URL</span>       <span class="c"># Typically /static/media/</span>
+    <span class="n">mRoot</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span>     <span class="c"># Typically /home/userX/project_static/media/</span>
+
+    <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">mUrl</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mRoot</span><span class="p">,</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">mUrl</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">uri</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">sUrl</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sRoot</span><span class="p">,</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">sUrl</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">uri</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s">&#39;media URI must start with </span><span class="si">%s</span><span class="s"> or </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sUrl</span><span class="p">,</span> <span class="n">mUrl</span><span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+<span class="k">def</span> <span class="nf">generate_pdf</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;today&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;farmer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Old MacDonald&#39;</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;animals&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;Cow&#39;</span><span class="p">,</span> <span class="s">&#39;Moo&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;Goat&#39;</span><span class="p">,</span> <span class="s">&#39;Baa&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;Pig&#39;</span><span class="p">,</span> <span class="s">&#39;Oink&#39;</span><span class="p">)]</span>
+
+    <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s">&#39;lyrics/oldmacdonald.html&#39;</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">Context</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="s">&#39;test.pdf&#39;</span><span class="p">),</span> <span class="s">&quot;w+b&quot;</span><span class="p">)</span>
+    <span class="n">pisaStatus</span> <span class="o">=</span> <span class="n">pisa</span><span class="o">.</span><span class="n">CreatePDF</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">link_callback</span><span class="o">=</span><span class="n">link_callback</span><span class="p">)</span>
+
+    <span class="nb">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">pdf</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="s">&#39;application/pdf&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Más de lo mismo, lo único que cambia es que al final devuelve el PDF por medio de un <code>HttpResponse</code> de Django.</p>
+</div>
+</div>
+<div class="section" id="eso-es-todo">
+<h2>¡Eso es todo!</h2>
+<p>Con este tutorial corto, pero informativo, pudimos aprender como usar xhtml2pdf para generar un reporte en PDF utilizando un HTML como base. Pero eso no es todo. xhtml2pdf tiene algunas limitaciones a la hora de renderizar HTML. Puedes conocerlas todas revisando la <a class="reference external" href="https://github.com/xhtml2pdf/xhtml2pdf/blob/master/doc/usage.rst">documentación</a>.</p>
+<p>¡Hasta la próxima!</p>
+</div>
+
+  </div>
+  <div class="article_meta">
+    <p>Posted on: 21/12/2015</p>
+    <p>Category: <a href="http://rogerandresgonzalez.com.ve/category/programacion/">Programación</a>
+ &ndash; Tags:
+      <a href="http://rogerandresgonzalez.com.ve/tag/python/">python</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/pdf/">pdf</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/reportes/">reportes</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/12/como-hacer-un-pdf-con-python/";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://rogergonzalez21.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Roger Andrés González. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Forked and modified by Roger Gonzalez on <a href="https://github.com/Rogergonzalez21/pelican-svbhack" target="_blank">github</a>  </p>
+    </div>
+  </main>
+</body>
+</html>
