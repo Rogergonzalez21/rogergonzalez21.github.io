@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/youtube.css">
+  <link rel="shortcut icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="alternate" hreflang="es" href="rogerandresgonzalez.com.ve/es/" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Roger Andrés González">
+  <meta name="description" content="Posts and writings by Roger Andrés González. Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.">
+  <meta property="og:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta name="twitter:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta itemprop="image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <link href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Roger Andrés González - rogerandresgonzalez.com.ve Atom" />
+
+<meta name="keywords" content="mail, mailx, bash, script, tutorial">
+
+  <title>
+    Roger Andrés González - rogerandresgonzalez.com.ve
+&ndash; ¿Cómo enviar un mail desde el terminal con mailx?  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-69257856-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside class="gray_background">
+    <div id="user_meta">
+      <a href="http://rogerandresgonzalez.com.ve">
+        <img src="http://rogerandresgonzalez.com.ve/images/yo.png" alt="logo">
+        </a>
+        <h2><a href="http://rogerandresgonzalez.com.ve">Roger Andrés González</a></h2>
+        <p>Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.</p>
+        <ul>
+        <ul class="social">
+        <li><a class="sc-linkedin white" href="https://ve.linkedin.com/in/rogergonzalez21/en" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github white" href="https://github.com/Rogergonzalez21" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-envelope-o white" href="mailto:me@rogerandresgonzalez.com.ve" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-twitter white" href="https://twitter.com/RogerGonzalez21" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+
+    <header>
+      <p>
+        / <a href="http://rogerandresgonzalez.com.ve">Home</a> /
+        <a href="/pages/about/">About</a> /
+        <a href="/pages/curriculum/">Curriculum Vitae</a> /
+        <a href="/archives/">Archive</a> /
+        <a href="/category/">Category</a> /
+        <a href="/tag/">Tags</a> /
+        <a href="/es/">Español</a> /
+        <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+<!--
+    <header>
+      <p>
+      <a href="http://rogerandresgonzalez.com.ve">Index</a> &brvbar; <a href="http://rogerandresgonzalez.com.ve/archives.html">Archives</a>
+      &brvbar; <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+      </p>
+    </header>
+-->
+<article>
+  <div class="article_title">
+    <h3><a href="http://rogerandresgonzalez.com.ve/2015/10/enviar-un-mail-con-mailx/">¿Cómo enviar un mail desde el terminal con mailx?</a></h3>
+  </div>
+  <div class="article_text">
+    <p>Hoy vengo con un tutorial un poco más corto y directo al grano. <strong>¿Cómo envío un correo por bash?</strong>.</p>
+<p>La respuesta, mailx</p>
+<div class="section" id="que-es-mailx">
+<h2>¿Qué es mailx?</h2>
+<p><a class="reference external" href="https://es.wikipedia.org/wiki/Mailx">mailx</a> es un programa para enviar y recibir correo. También, es una versión mejorada de 'mail' en Unix. <strong>mailx</strong> es una herramienta muy útil para mandar correos por bash, ya que podemos <strong>usarlo en un script</strong> <code>.sh</code></p>
+<p>Su instalación es muy sencilla:</p>
+<div class="highlight"><pre>user@pc:~<span class="nv">$ </span>sudo apt-get install mailutils
+
+<span class="c"># Cuando nos salga una ventana preguntando la configuración, seleccionamos la segunda</span>
+</pre></div>
+<p>Ya que tenemos mailx instalado, podemos hacer uso de ella.</p>
+</div>
+<div class="section" id="primeros-pasos-con-mailx">
+<h2>Primeros pasos con mailx</h2>
+<p>mailx es muy sencillo de utilizar. Podemos hacerlo de esta forma:</p>
+<div class="highlight"><pre>user@pc:~<span class="nv">$ </span>mailx -s <span class="s2">&quot;Asunto del mail&quot;</span> <span class="s2">&quot;correo_destinatario@servidor.com&quot;</span>
+Cc: correo_de_copia@servidor.com
+Hola! Soy un correo de mailx!
+
+<span class="c"># Presionamos Cntrl + D para enviar el correo</span>
+</pre></div>
+<div class="section" id="que-pasa-aqui">
+<h3>¿Qué pasa aquí?</h3>
+<p>Primero, estamos ejecutando <code>mailx</code> con el parámetro <code>-s</code>, que permite añadir un asunto al mail (&quot;Asunto del mail&quot;), y por último, el correo destinatario (&quot;<a class="reference external" href="mailto:correo_destinatario&#64;servidor.com">correo_destinatario&#64;servidor.com</a>&quot;).</p>
+<p>Cuando presionamos enter, mailx nos da opciones de agregar un 'Cc' (Con copia) y el cuerpo del correo.</p>
+</div>
+<div class="section" id="pero-esto-no-es-muy-automatico-como-puedo-usarlo-en-un-script">
+<h3>Pero esto no es muy automático... ¿Cómo puedo usarlo en un script?</h3>
+<p>Hay muchas formas de usarlo en un script, pero yo uso solo 2.</p>
+<p>La primera, solo envía un correo con &quot;Asunto&quot;, pero sin cuerpo:</p>
+<div class="highlight"><pre>user@pc:~<span class="nv">$ </span>mailx -s <span class="s2">&quot;Asunto del mail&quot;</span> <span class="s2">&quot;correo_destinatario@servidor.com&quot;</span> &lt; /dev/null
+</pre></div>
+<p>Esta ejecución de mailx nos va a enviar un correo con asunto &quot;Asunto del mail&quot;. Así de sencillo.</p>
+<p>Si queremos que nos mande un correo con asunto y cuerpo, podemos usar:</p>
+<div class="highlight"><pre>user@pc:~<span class="nv">$ </span>mailx -s <span class="s2">&quot;Asunto del mail&quot;</span> <span class="s2">&quot;correo_destinatario@servidor.com&quot;</span> &lt; cuerpo-del-mensaje.txt
+</pre></div>
+<p>Dónde 'cuerpo-del-mensaje.txt' sea un archivo de texto plano que contenga el mensaje que quieres que sea enviado.</p>
+</div>
+</div>
+<div class="section" id="eso-es-todo">
+<h2>¡Eso es todo!</h2>
+<p>Usar mailx es muy util para multiples cosas. Yo lo uso cuando programo un <a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/descargar-ftp-usando-wget-y-cron/">script con cron</a> y <strong>quiero que me avise cuando se ejecute y cuando termine</strong>. ¿Para qué lo usarías tu?</p>
+<p>Hasta la próxima.</p>
+</div>
+
+  </div>
+  <div class="article_meta">
+    <p>Posted on: 30/10/2015</p>
+    <p>Category: <a href="http://rogerandresgonzalez.com.ve/category/tecnologia/">Tecnología</a>
+ &ndash; Tags:
+      <a href="http://rogerandresgonzalez.com.ve/tag/mail/">mail</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/mailx/">mailx</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/bash/">bash</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/script/">script</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/tutorial/">tutorial</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/10/enviar-un-mail-con-mailx/";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://rogergonzalez21.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Roger Andrés González. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Forked and modified by Roger Gonzalez on <a href="https://github.com/Rogergonzalez21/pelican-svbhack" target="_blank">github</a>  </p>
+    </div>
+  </main>
+</body>
+</html>

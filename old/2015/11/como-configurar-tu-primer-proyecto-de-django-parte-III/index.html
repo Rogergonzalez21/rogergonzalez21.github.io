@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="http://rogerandresgonzalez.com.ve/theme/css/youtube.css">
+  <link rel="shortcut icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="http://rogerandresgonzalez.com.ve/images/favicon.ico" type="image/x-icon">
+  <link rel="alternate" hreflang="es" href="rogerandresgonzalez.com.ve/es/" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Roger Andrés González">
+  <meta name="description" content="Posts and writings by Roger Andrés González. Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.">
+  <meta property="og:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta name="twitter:image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <meta itemprop="image" content="http://rogerandresgonzalez.com.ve/images/yo.png" />
+  <link href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Roger Andrés González - rogerandresgonzalez.com.ve Atom" />
+
+<meta name="keywords" content="django, python">
+
+  <title>
+    Roger Andrés González - rogerandresgonzalez.com.ve
+&ndash; ¿Cómo configurar tu primer proyecto de Django? Parte III  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-69257856-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside class="gray_background">
+    <div id="user_meta">
+      <a href="http://rogerandresgonzalez.com.ve">
+        <img src="http://rogerandresgonzalez.com.ve/images/yo.png" alt="logo">
+        </a>
+        <h2><a href="http://rogerandresgonzalez.com.ve">Roger Andrés González</a></h2>
+        <p>Pythonista. Love to eat. Critic. Music lover. Always wanting to learn more.</p>
+        <ul>
+        <ul class="social">
+        <li><a class="sc-linkedin white" href="https://ve.linkedin.com/in/rogergonzalez21/en" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github white" href="https://github.com/Rogergonzalez21" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-envelope-o white" href="mailto:me@rogerandresgonzalez.com.ve" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-twitter white" href="https://twitter.com/RogerGonzalez21" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+
+    <header>
+      <p>
+        / <a href="http://rogerandresgonzalez.com.ve">Home</a> /
+        <a href="/pages/about/">About</a> /
+        <a href="/pages/curriculum/">Curriculum Vitae</a> /
+        <a href="/archives/">Archive</a> /
+        <a href="/category/">Category</a> /
+        <a href="/tag/">Tags</a> /
+        <a href="/es/">Español</a> /
+        <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+        </p>
+    </header>
+<!--
+    <header>
+      <p>
+      <a href="http://rogerandresgonzalez.com.ve">Index</a> &brvbar; <a href="http://rogerandresgonzalez.com.ve/archives.html">Archives</a>
+      &brvbar; <a href="http://rogerandresgonzalez.com.ve/feeds/all.atom.xml">Atom</a>
+      </p>
+    </header>
+-->
+<article>
+  <div class="article_title">
+    <h3><a href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/">¿Cómo configurar tu primer proyecto de Django? Parte III</a></h3>
+  </div>
+  <div class="article_text">
+    <p>Siguiendo desde el <a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/">último tutorial</a>, hoy vamos a usar el Django Admin y vamos a hacer nuestro primer formulario.</p>
+<div class="section" id="que-es-el-django-admin">
+<h2>¿Qué es el Django admin?</h2>
+<p>El <a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/contrib/admin/">Django admin</a> es uno de los mejores elementos que tiene Django para el desarrollo web. Django automáticamente trae una interfaz de administrador, que lee tus modelos y te da opciones para añadir, editar y eliminar registros en tu base de datos. ¿Bastante útil, no?.</p>
+</div>
+<div class="section" id="como-accedo-al-django-admin">
+<h2>¿Cómo accedo al Django admin?</h2>
+<p>Con nuestra <strong>aplicación corriendo</strong>, vamos al navegador a la dirección <code>localhost:8000/admin</code>, y vamos a conseguir esto:</p>
+<img alt="django admin" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-login.png" />
+<p>Para entrar, usamos los datos del superusuario, que creamos en el tutorial anterior. Al entrar, nos conseguimos con el panel de administración de Django, pero con un problema: <strong>no hay modelos para editar</strong>.</p>
+<p>Para registrar tus modelos, tienes que añadir lo siguiente en <code>app_test/admin.py</code>:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">app_test.models</span> <span class="kn">import</span> <span class="n">Person</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+</pre></div>
+<p>Si actualizamos en el navegador, veremos nuestro modelo listo para añadir, editar o eliminar registros.</p>
+<img alt="django admin model registration" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-model-registration.png" />
+<p>Si hacemos click en &quot;Add&quot; en el apartado de &quot;Persons&quot;, podemos añadir a una persona.</p>
+<img alt="django admin model registration" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/django-admin-add-person.png" />
+<p>Finalmente, si volvemos a <code>localhost:8000/index</code>, vamos a ver a nuestra persona recientemente creada.</p>
+<img alt="primera persona" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/first-person.png" />
+</div>
+<div class="section" id="pero-espera-esto-no-es-para-nada-practico">
+<h2>Pero espera, esto no es para nada práctico</h2>
+<p>En lo más mínimo esto es práctico. Si estamos haciendo una aplicación para el público, es imposible pedirle a cada persona que la quiera usar que entre en el panel de administración para registrarse. Entonces, ¿Qué usamos para añadir nuevos registros a la base de datos? Claro que si, campeon. Un formulario.</p>
+</div>
+<div class="section" id="creando-nuestro-primer-formulario">
+<h2>Creando nuestro primer formulario</h2>
+<p>Primero, tenemos que crear el archivo <code>app_test/forms.py</code>. Allí, vamos a colocar lo siguiente:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">app_test.models</span> <span class="kn">import</span> <span class="n">Person</span>
+
+<span class="k">class</span> <span class="nc">PersonForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Nombre&quot;</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Correo electrónico&#39;</span><span class="p">)</span>
+    <span class="n">phone_num</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Teléfono&#39;</span><span class="p">)</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Dirección&quot;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Person</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;email&#39;</span><span class="p">,</span> <span class="s">&#39;phone_num&#39;</span><span class="p">,</span> <span class="s">&#39;address&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Voy a explicar paso a paso lo que está pasando.</p>
+<ul class="simple">
+<li>Primero hacemos los imports. Importamos <code>forms</code> y nuestro modelo, <code>Person</code>.</li>
+<li>Creamos una clase llamada &quot;PersonForm&quot; que hereda de <code>forms.ModelForm</code>. En Django, los formularios son Clases.</li>
+<li>Creamos cada uno de los campos, exactamente como en los modelos, pero esta vez viniendo de &quot;Forms&quot;.</li>
+<li>Usamos la subclase <code>Meta</code> para definir que estamos usando un modelo, y cuáles de los campos vamos a llenar.</li>
+</ul>
+<p>¡Y listo! Ya tenemos nuestro formulario listo, y podemos usarlo en nuestras vistas.</p>
+<p>En <code>app_test/views.py</code>, creamos la siguiente vista:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">app_test.forms</span> <span class="kn">import</span> <span class="n">PersonForm</span>
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="c"># ...</span>
+
+<span class="k">def</span> <span class="nf">addPerson</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PersonForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PersonForm</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&#39;add_person.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;form&#39;</span><span class="p">:</span> <span class="n">form</span><span class="p">})</span>
+</pre></div>
+<p>En esta vista:</p>
+<ul class="simple">
+<li>Importamos <code>redirect</code>, para manejar las redirecciones de las vistas.</li>
+<li>Creamos la vista <code>addPerson</code>, que va a manejar nuestro formulario.</li>
+<li>En la vista, chequeamos si se hizo una petición POST (si no sabes lo que es POST o las peticiones HTTP, puedes leerlo <a class="reference external" href="https://es.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9todos_de_petici.C3.B3n">aquí</a>).<ul>
+<li>Si es un POST, chequea si el formulario es válido. Si es válido, guarda en la base de datos y redirecciona a <code>index</code>, de lo contrario, devuelve los errores del formulario.</li>
+<li>Si no es POST, entonces devuelve el formulario vacío.</li>
+</ul>
+</li>
+</ul>
+<p>Seguidamente, creamos el template que muestre el formulario. En <code>app_test/templates/add_person.html</code>:</p>
+<div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Añadir personas<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Añadir personas<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">action=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>Guardar<span class="nt">&lt;/button&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{% url &#39;index&#39; %}&quot;</span><span class="nt">&gt;</span>Volver<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/form&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+<p>Aquí hacemos uso del sistema de templates de Django, <a class="reference external" href="http://jinja.pocoo.org/docs/dev/">Jinja2</a>. Con <code>{% url 'index' %}</code>, nos aseguramos que siempre ese link se dirija al URL con nombre <code>index</code>.</p>
+<p>Finalmente, colocamos la nueva URL que lleva hacia la vista. En <code>app_test/urls.py</code></p>
+<div class="highlight"><pre><span class="c"># ...</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^index$&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;index&#39;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^index/addPerson/$&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">addPerson</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;addPerson&#39;</span><span class="p">),</span> <span class="c"># &lt;--- Agregar esta linea!</span>
+
+<span class="p">)</span>
+</pre></div>
+<p>Si vamos a <code>localhost:8000/index/addPerson</code>, podemos ver nuestro formulario funcionando sin problemas. Si lo llenamos con datos y hacemos click en &quot;Guardar&quot;, volveremos a la página principal y podremos ver nuestro nuevo registro.</p>
+<img alt="form" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/form1.png" />
+<img alt="form2" src="http://rogerandresgonzalez.com.ve/images/django_tutorial/form2.png" />
+<p>Para un mejor flujo, añadimos un link a &quot;Añadir personas&quot; desde la página principal. En <code>app_test/templates/index.html</code>:</p>
+<div class="highlight"><pre>    <span class="c">&lt;!--Justo despues del cierre de la tabla--&gt;</span>
+    <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{% url &#39;addPerson&#39; %}&quot;</span><span class="nt">&gt;</span>Añadir persona<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="y-eso-es-todo">
+<h2>¡Y eso es todo!</h2>
+<p>Ahora tu proyecto debe verse <a class="reference external" href="https://github.com/Rogergonzalez21/django-tutorial/tree/bc9346efde23714d360e1170c18268535ed98871">así</a>.</p>
+<p>Aún falta mucho por cubrir, pero no hay tanto tiempo. Aún se le podría agregar <a class="reference external" href="https://docs.djangoproject.com/en/1.8/howto/static-files/">archivos estáticos</a>, como hojas de estilo CSS, o scripts en JavaScript, y muchísimas otras cosas mas. Recuerda que el objetivo principal de este tutorial es demostrar lo sencillo que es crear una aplicación con Django.</p>
+<p>En un próximo post, haré un tutorial para hacer deploy de tu aplicación de Django en OpenShift.</p>
+<p>¡Hasta la próxima!</p>
+<p><a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/10/como-configurar-tu-primer-proyecto-de-django-parte-I/">Parte 1: Preparando nuestro proyecto de Django</a></p>
+<p><a class="reference external" href="http://rogerandresgonzalez.com.ve/2015/11/como-configurar-tu-primer-proyecto-de-django-parte-II/">Parte 2: Aplicación, Vistas, Modelos, Templates y URLS</a></p>
+</div>
+
+  </div>
+  <div class="article_meta">
+    <p>Posted on: 24/11/2015</p>
+    <p>Category: <a href="http://rogerandresgonzalez.com.ve/category/programacion/">Programación</a>
+ &ndash; Tags:
+      <a href="http://rogerandresgonzalez.com.ve/tag/django/">django</a>,      <a href="http://rogerandresgonzalez.com.ve/tag/python/">python</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "2015/11/como-configurar-tu-primer-proyecto-de-django-parte-III/";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://rogergonzalez21.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Roger Andrés González. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Forked and modified by Roger Gonzalez on <a href="https://github.com/Rogergonzalez21/pelican-svbhack" target="_blank">github</a>  </p>
+    </div>
+  </main>
+</body>
+</html>
