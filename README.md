@@ -1,4 +1,4 @@
-# josegLEGO - Landing Page
+# rogs - Landing Page
 
 This a personal lading page with HTML, CSS & JavaScript. It's based on Bootstrap 3, Sass & jQuery with some thirds libs.
 
@@ -12,11 +12,11 @@ We have a lot of requirements, but are imported with NPM & Bower. So, you just n
 ## Get it 
 ### You can clone it
 ``` sh
-$ git clone git@github.com:joseglego/joseglego.github.io.git
+$ git clone git@github.com:Rogergonzalez21/rogergonzalez21.github.io.git
 ```
 
 ## You can download it 
-Go to [josegLEGO-repo], clic on `Clone or Download` and finally clic `Downloaz ZIP`
+Go to [rogs-repo], clic on `Clone or Download` and finally clic `Downloaz ZIP`
 
 
 ## Install internal requirements
@@ -43,7 +43,7 @@ $ gulp build:dist                   # You must be on the root folder of the repo
 
 
 ### Generated Minified Files to GitHubPages
-It reuse the previous task. But it moves all the files to root folder and can works as a GitHubPage. You just neeed to commit the changes and push to master. 
+It reuses the previous task, but it moves all the files to the root folder so it  works as a GitHubPage. You just neeed to commit the changes and push to master. 
 
 ``` sh
 $ gulp build:ghp                   # You must be on the root folder of the repository
@@ -95,7 +95,7 @@ If you wanna use only a specific feature found in this page. You can check the t
 [npm]: <https://docs.npmjs.com/getting-started/installing-node>
 [Sass]: <http://sass-lang.com/install>
 [Bower]: <https://bower.io/#install-bower>
-[josegLEGO-repo]: <https://github.com/joseglego/joseglego.github.io>
+[rogs-repo]: <https://github.com/Rogergonzalez21/rogergonzalez21.github.io>
 [Bootstrap]: <http://getbootstrap.com/>
 [Backstretch]: <https://github.com/srobbin/jquery-backstretch>
 [jQuery matchHeight]: <https://github.com/liabru/jquery-match-height>
